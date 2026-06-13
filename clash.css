@@ -1,0 +1,157 @@
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial,sans-serif;
+    margin:0;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+.h1-c{
+    color:rgb(212,82,17);
+    border: 3px solid rgb(0, 255, 4);
+    border-radius: 80px;
+    padding: 8px;
+    background-color: #ffea00;
+}
+
+.nameclub{
+    text-align:center;
+    border:3px solid rgb(24,0,236);
+    padding:8px;
+    border-radius:80px;
+    background-color:rgb(248,103,0);
+    color:rgb(0,255,157);
+}
+
+.welcome{
+    text-align:center;
+    color:rgb(6,255,2);
+    border:3px solid rgb(24,0,236);
+    padding:8px;
+    border-radius:80px;
+    background-color:rgb(248,0,0);
+}
+
+.korosh{
+    text-align:center;
+    border:3px solid rgb(24,0,236);
+    padding:8px;
+    border-radius:80px;
+    background-color:rgb(255,179,0);
+    color:black;
+}
+
+a{
+    color:rgb(0,255,166);
+    text-decoration:none;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th,td{
+    padding:12px;
+    border:1px solid #334155;
+    text-align:center;
+}
+
+th{
+    background:#1e293b;
+}
+
+#clanCards{
+    width:90%;
+    margin:auto;
+}
+
+.clan-card{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    background:#1e293b;
+    border:1px solid #31486f;
+    margin:15px 0;
+    padding:15px;
+    border-radius:15px;
+}
+
+.rank{
+    font-size:30px;
+    font-weight:bold;
+    width:60px;
+}
+
+.clan-logo{
+    width:80px;
+    height:80px;
+}
+
+.clan-info{
+    flex:1;
+    text-align:left;
+}
+
+.clan-info h2{
+    color:#ffd700;
+    margin:0;
+}
+
+.clan-info p{
+    color:#ccc;
+    margin:0;
+}
+
+.clan-stat{
+    text-align:center;
+    min-width:100px;
+    font-weight:bold;
+}
+.p-in{
+    text-align: center;
+    border: #ffd700;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: rgb(27, 0, 134);
+    color: rgb(255, 0, 0);
+    transition: all 700ms;
+}
+
+.h-w{
+    text-align: center;
+
+}
+#menuBtn{
+    position:fixed;
+    top:15px;
+    right:15px;
+
+    font-size:30px;
+    background:none;
+    border:none;
+    color:white;
+    cursor:pointer;
+}
+
+#aboutBox{
+    display: none;
+    position:fixed;
+    top:60px;
+    right:15px;
+
+    width:300px;
+
+    background:#1e293b;
+    color:white;
+
+    padding:15px;
+    border-radius:12px;
+
+    border:1px solid #334155;
+}
