@@ -1,7 +1,7 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjZhYjI0NzYyLTA1Y2UtNDczMC04ZTVkLTMzNDEzZGYzZDIxNyIsImlhdCI6MTc4MTM0MDQ2NCwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIxLjIxLjIyOSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.AuaCOMbDM2PlqJZCxqtjr88dc5F6X9uQORFdTJCYI5MUe8nkrzFwDAWSthI2SkVsK84AsZqkikliuyvWiftjDg";
+const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjgxYWQ1MmZiLTVmYmYtNGU0MC1iNTBlLWZjZGEyMjVjMmYxZCIsImlhdCI6MTc4MzE1NTYxMiwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIyLjE3MS4xMzYiXSwidHlwZSI6ImNsaWVudCJ9XX0.bNYDp3zNn7gZF1Mz7y3W5bW6_KG3gDdyk8gnBkaOQHSqk-9c6m7Lr3p6llCHn839-5ErnKaPvFPPN89_9d7r0A";
 
 const clanTags = [
 "2PG9CY2UR",
@@ -51,85 +51,91 @@ const clanTags = [
   "Q09VJJR8",
   "2QGYYJPC2",
   "2RR82CLPR",
-  "LJPLG08J"
-
-
-
-
+  "LJPLG08J",
+  
 ];
 
 async function updateClans() {
-try {
+  try {
 
+    const clans = [];
 
-const clans = [];
+    for (const tag of clanTags) {
 
-for (const tag of clanTags) {
+      console.log("Loading clan:", tag);
 
-  console.log("Loading clan:", tag);
-
-  const response = await axios.get(
-    `https://api.clashofclans.com/v1/clans/%23${tag}`,
-    {
-      headers: {
-        Authorization: `Bearer ${TOKEN}`
-      }
-    }
-  );
-
-  let totalDonations = 0;
-
-  for (const member of response.data.memberList) {
-
-    const playerTag = member.tag.replace("#", "");
-
-    const playerResponse = await axios.get(
-      `https://api.clashofclans.com/v1/players/%23${playerTag}`,
-      {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`
+      const response = await axios.get(
+        `https://api.clashofclans.com/v1/clans/%23${tag}`,
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`
+          }
         }
+      );
+
+      let totalDonations = 0;
+
+      for (const member of response.data.memberList) {
+
+        const playerTag = member.tag.replace("#", "");
+
+        try {
+
+          const playerResponse = await axios.get(
+            `https://api.clashofclans.com/v1/players/%23${playerTag}`,
+            {
+              headers: {
+                Authorization: `Bearer ${TOKEN}`
+              }
+            }
+          );
+
+          totalDonations += playerResponse.data.donations || 0;
+
+          await new Promise(resolve => setTimeout(resolve, 300));
+
+        } catch (err) {
+
+          console.log("Player not found:", playerTag);
+
+        }
+
       }
+
+      const leader = response.data.memberList.find(
+        member => member.role === "leader"
+      );
+
+      clans.push({
+        name: response.data.name,
+        tag: response.data.tag,
+        level: response.data.clanLevel,
+        members: response.data.members,
+        points: response.data.clanPoints,
+        warWins: response.data.warWins,
+        logo: response.data.badgeUrls.large,
+        donations: totalDonations,
+        leader: leader ? leader.name : "Unknown"
+      });
+
+    }
+
+    clans.sort((a, b) => b.donations - a.donations);
+
+    fs.writeFileSync(
+      "clans.json",
+      JSON.stringify(clans, null, 2)
     );
 
-    totalDonations += playerResponse.data.donations || 0;
+    console.log("clans.json updated successfully");
+
+  } catch (error) {
+
+    console.log("Status:", error.response?.status);
+    console.log("URL:", error.config?.url);
+    console.log(error.message);
+
   }
-
-  const leader = response.data.memberList.find(
-    member => member.role === "leader"
-  );
-
-  clans.push({
-    name: response.data.name,
-    tag: response.data.tag,
-    level: response.data.clanLevel,
-    members: response.data.members,
-    points: response.data.clanPoints,
-    warWins: response.data.warWins,
-    logo: response.data.badgeUrls.large,
-    donations: totalDonations,
-    leader: leader ? leader.name : "Unknown"
-  });
-
-}
-
-clans.sort((a, b) => b.donations - a.donations);
-
-fs.writeFileSync(
-  "clans.json",
-  JSON.stringify(clans, null, 2)
-);
-
-console.log("clans.json updated successfully");
-
-
-} catch (error) {
-
-
-console.log("Error:", error.message);
-
-
-}
 }
 
 updateClans();
