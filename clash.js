@@ -3,7 +3,7 @@ console.log("clash.js loaded");
 async function loadClans() {
     try {
 
-        const response = await fetch("http://localhost:3000/clans");
+        const response = await fetch("clans.json");
         const clans = await response.json();
 
         const table = document.getElementById("clansTable");
@@ -15,7 +15,7 @@ async function loadClans() {
         clans.forEach((clan, index) => {
 
             table.innerHTML += `
-            <tr>
+            <tr onclick="openClan('${clan.tag}')" class="clickable-row">
                 <td>${index + 1}</td>
                 <td>${clan.name}</td>
                 <td>${clan.level}</td>
@@ -23,12 +23,16 @@ async function loadClans() {
                 <td>${clan.points}</td>
                 <td>${clan.warWins}</td>
                 <td>${clan.donations}</td>
-                
+                <td>
+<button class="open-btn" onclick="openClan('${clan.tag}')">
+    🚀 Open Clan
+</button>
             </tr>
             `;
 
             cards.innerHTML += `
-            <div class="clan-card">
+            
+            <div class="clan-card" onclick="openClan('${clan.tag}')">
 
                 <img
                 src="${clan.logo}"
@@ -69,8 +73,52 @@ async function loadClans() {
         console.error(err);
     }
 }
+function openClan(tag) {
+    window.location.href =
+        `clan.html?tag=${encodeURIComponent(tag)}`;
+}
 loadClans();
 
-setInterval(loadClans, 30000);
+async function searchClan() {
 
-loadClans();
+    const tag = document
+        .getElementById("search")
+        .value
+        .trim()
+        .replace("#", "");
+
+    if (!tag) return;
+
+    const response = await fetch("clans.json");
+    const clans = await response.json();
+
+    const clan = clans.find(
+        c => c.tag.replace("#", "") === tag
+    );
+
+    if (clan) {
+        openClan(clan.tag);
+    } else {
+        alert("Clan not found");
+    }
+}
+
+document
+.getElementById("search")
+.addEventListener("keypress", function(e){
+
+    if(e.key === "Enter"){
+        searchClan();
+    }
+
+});
+
+setInterval(loadClans, 60000);
+
+function goToTopClans() {
+    document
+        .getElementById("topClans")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+}

@@ -7,6 +7,8 @@
 
 <link rel="stylesheet" href="clash.css">
 
+<h1 id="topClans" class="top">🏆 TOP Clans</h1>
+
 <style>
 body{
     background:#0f172a;
@@ -61,9 +63,19 @@ h1{
 
 <h1 class="top">🏆 TOP Clans</h1>
 
-<input id="search" placeholder="Clan Tag">
-<input type="submit" value="Enter"> 
-<p>coming soon☝</p>
+<div class="search-box">
+
+    <input
+        type="text"
+        id="search"
+        placeholder="🔍 search Clan Tag..."
+    >
+
+    <button onclick="searchClan()">
+        Search
+    </button>
+
+</div> 
 <table>
     <thead>
         <tr>
@@ -74,6 +86,7 @@ h1{
             <th>Points</th>
             <th>warWins</th>
             <th>Donations</th>
+            <th>Open</th>
         </tr>
     </thead>
 
@@ -81,23 +94,27 @@ h1{
 </table>
 
 <br><hr>
-<h1 class="h-w">welcome</h1>
-<h3 class="nameclub">
-The official website of the top clan of Clash for Iran and World
-</h3>
+<section class="hero">
 
-<br>
+    <h1 class="h-w">⚔️ Welcome to World Of Req ⚔️</h1>
 
-<h2 class="welcome">
-Players look at the place where the top clans are present.
-</h2>
+    <h3 class="nameclub">
+        The Ultimate Clash of Clans Clan Ranking Platform
+    </h3>
 
-<br>
-
-<p class="korosh">
-Hard work never killed anyone, but worry is what destroys a person.
-<br>
-Cyrus the Great
+    <h2 class="welcome">
+        Explore the strongest clans, track donations,
+        compare statistics and discover the best warriors.
+    </h2>
+    <p class="korosh">
+        "Hard work never killed anyone, but worry is what destroys a person."
+        <br><br>
+        — Cyrus The Great
+    </p>
+ <button class="hero-btn" onclick="goToTopClans()">
+    🔥 Explore Top Clans
+</button>
+</section>
 </p>
 <button id="menuBtn">⋮</button>
 
@@ -119,12 +136,24 @@ Cyrus the Great
 const menuBtn = document.getElementById("menuBtn");
 const aboutBox = document.getElementById("aboutBox");
 
-menuBtn.onclick = () => {
+menuBtn.onclick = (e) => {
+
+    e.stopPropagation();
+
     if (aboutBox.style.display === "none") {
         aboutBox.style.display = "block";
     } else {
         aboutBox.style.display = "none";
     }
+
+};
+
+aboutBox.onclick = (e) => {
+    e.stopPropagation();
+};
+
+document.onclick = () => {
+    aboutBox.style.display = "none";
 };
 </script>
 <script src="clash.js"></script>

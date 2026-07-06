@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Clan Details</title>
+
+<style>
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial;
+    padding:20px;
+}
+
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #334155;
+    padding:8px;
+    text-align:center;
+}
+
+th{
+    background:#1e293b;
+}
+
+tr:nth-child(even){
+    background:#172033;
+}
+</style>
+
+</head>
+<body>
+
+<div id="clanInfo"></div>
+
+<script>
+
+const tag = new URLSearchParams(window.location.search).get("tag");
+
+fetch("clans.json")
+.then(r => r.json())
+.then(clans => {
+
+    const clan = clans.find(c =>
+        c.tag.replace("#","") === tag.replace("#","")
+    );
+
+    if(!clan){
+        document.body.innerHTML = "<h1>Clan not found</h1>";
+        return;
+    }
+
+    const topDonator =
+        [...clan.membersData]
+        .sort((a,b)=>b.donations-a.donations)[0];
+
+    const topPlayer =
+        [...clan.membersData]
+        .sort((a,b)=>b.trophies-a.trophies)[0];
+
+    let membersHTML = "";
+
+    clan.membersData
+    .sort((a,b)=>b.donations-a.donations)
+    .forEach(member=>{
+
+        membersHTML += `
+        <tr>
+            <td>${member.name}</td>
+            <td>${member.role}</td>
+            <td>${member.townHall}</td>
+            <td>${member.trophies}</td>
+            <td>${member.donations}</td>
+            <td>${member.expLevel}</td>
+        </tr>
+        `;
+    });
+
+    document.getElementById("clanInfo").innerHTML = `
+    
+    <div class="card">
+
+        <h1>${clan.name}</h1>
+
+        <p><b>Tag:</b> ${clan.tag}</p>
+        <p><b>Leader:</b> ${clan.leader}</p>
+        <p><b>Level:</b> ${clan.level}</p>
+        <p><b>Members:</b> ${clan.members}</p>
+        <p><b>Points:</b> ${clan.points}</p>
+        <p><b>War Wins:</b> ${clan.warWins}</p>
+        <p><b>Total Donations:</b> ${clan.donations}</p>
+
+        <hr>
+
+        <h2>🏆 Top Donator</h2>
+        <p>${topDonator.name} (${topDonator.donations})</p>
+
+        <h2>🏆 Top Trophy Player</h2>
+        <p>${topPlayer.name} (${topPlayer.trophies})</p>
+
+    </div>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>TH</th>
+                <th>Trophies</th>
+                <th>Donations</th>
+                <th>Level</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            ${membersHTML}
+        </tbody>
+
+    </table>
+    `;
+});
+
+</script>
+
+</body>
+</html>

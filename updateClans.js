@@ -1,7 +1,7 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjgxYWQ1MmZiLTVmYmYtNGU0MC1iNTBlLWZjZGEyMjVjMmYxZCIsImlhdCI6MTc4MzE1NTYxMiwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIyLjE3MS4xMzYiXSwidHlwZSI6ImNsaWVudCJ9XX0.bNYDp3zNn7gZF1Mz7y3W5bW6_KG3gDdyk8gnBkaOQHSqk-9c6m7Lr3p6llCHn839-5ErnKaPvFPPN89_9d7r0A";
+const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQ2ZTNiNGY5LTQ1OTYtNGFhMC1hZjY5LTBiMzVhMmExYjNiNCIsImlhdCI6MTc4MzMyMzE0Niwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIxLjI1MC45MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.a3NRqH7YIq8vvaNCfAEBqKmkDq5XvreGwbfep1IaYCva0qbizfv91N3pT-cdWNCCF73H4QXdAY4Mto713Wt-gQ";
 
 const clanTags = [
 "2PG9CY2UR",
@@ -52,6 +52,7 @@ const clanTags = [
   "2QGYYJPC2",
   "2RR82CLPR",
   "LJPLG08J",
+  "2CQCVCVCV"
   
 ];
 
@@ -74,6 +75,7 @@ async function updateClans() {
       );
 
       let totalDonations = 0;
+      let membersData = [];
 
       for (const member of response.data.memberList) {
 
@@ -91,6 +93,15 @@ async function updateClans() {
           );
 
           totalDonations += playerResponse.data.donations || 0;
+          membersData.push({
+  name: playerResponse.data.name,
+  tag: playerResponse.data.tag,
+  role: member.role,
+  townHall: playerResponse.data.townHallLevel,
+  trophies: playerResponse.data.trophies,
+  donations: playerResponse.data.donations || 0,
+  expLevel: playerResponse.data.expLevel
+});
 
           await new Promise(resolve => setTimeout(resolve, 300));
 
@@ -115,7 +126,8 @@ async function updateClans() {
         warWins: response.data.warWins,
         logo: response.data.badgeUrls.large,
         donations: totalDonations,
-        leader: leader ? leader.name : "Unknown"
+        leader: leader ? leader.name : "Unknown",
+        membersData: membersData
       });
 
     }
