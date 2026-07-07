@@ -498,3 +498,93 @@ tr:nth-child(even){
         font-size:14px;
     }
 }
+@media (max-width: 768px){
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    th,td{
+        font-size:13px;
+        padding:8px;
+    }
+}
+@media (max-width: 768px){
+
+    .clan-card{
+        flex-direction:column;
+        text-align:center;
+        padding:15px;
+    }
+
+    .clan-logo{
+        width:100px;
+        height:100px;
+    }
+}
+
+@media (max-width: 768px){
+
+    .site-logo{
+        width:80px;
+        height:80px;
+    }
+}
+
+@media (max-width: 768px){
+
+    .h-w{
+        font-size:30px;
+    }
+
+    .h1-c{
+        font-size:24px;
+    }
+}
+
+@media (max-width: 768px){
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .search-box input{
+        width:90%;
+    }
+
+    .search-box button{
+        width:90%;
+    }
+}
+
+@media (max-width: 768px){
+
+    #aboutBox{
+        width:85%;
+        right:5%;
+    }
+}
+
+@media (max-width:768px){
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .big-logo{
+        width:90px;
+        height:90px;
+    }
+
+    .card{
+        padding:15px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+}
