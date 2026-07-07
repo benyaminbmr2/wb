@@ -402,3 +402,48 @@ th{
     font-weight:bold;
     text-align:center;
 }
+tr:nth-child(even){
+    background:#172033;
+}
+.back-btn{
+    background:linear-gradient(135deg,#facc15,#eab308);
+    color:#000;
+    border:none;
+    padding:12px 24px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-bottom:20px;
+
+    box-shadow:0 0 15px rgba(250,204,21,.5);
+    transition:all .3s ease;
+}
+
+.back-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px rgba(250,204,21,.8);
+}
+
+.back-btn:active{
+    transform:translateY(0);
+}
+
+.back-btn:hover{
+    transform:scale(1.05);
+}
+.big-logo{
+    width:120px;
+    height:120px;
+    display:block;
+    margin:0 auto 15px;
+}
+.top-player{
+    background:#334155;
+    padding:12px;
+    margin:10px 0;
+    border-radius:12px;
+    font-weight:bold;
+    border-left:4px solid gold;
+    box-shadow:0 0 10px rgba(250,204,21,0.3);
+}
