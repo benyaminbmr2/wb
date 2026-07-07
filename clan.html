@@ -73,6 +73,34 @@ th{
 tr:nth-child(even){
     background:#172033;
 }
+.member-card{
+    display:none;
+}
+
+@media (max-width:768px){
+
+    table{
+        display:none;
+    }
+
+    .member-card{
+        display:block;
+        background:#1e293b;
+        padding:15px;
+        margin:10px 0;
+        border-radius:12px;
+        border:1px solid #334155;
+    }
+
+    .member-card h3{
+        margin:0 0 10px 0;
+        color:#facc15;
+    }
+
+    .member-card p{
+        margin:5px 0;
+    }
+}
 </style>
 
 </head>
@@ -132,6 +160,7 @@ top5Donators.forEach((player,index)=>{
 });
 
     let membersHTML = "";
+    let membersCardsHTML = "";
 
     clan.membersData
     .sort((a,b)=>b.donations-a.donations)
@@ -147,6 +176,17 @@ top5Donators.forEach((player,index)=>{
             <td>${member.expLevel}</td>
         </tr>
         `;
+        membersCardsHTML += `
+<div class="member-card">
+    <h3>👤 ${member.name}</h3>
+
+    <p>🎖 Role: ${member.role}</p>
+    <p>🏰 TH: ${member.townHall}</p>
+    <p>🏆 Trophies: ${member.trophies}</p>
+    <p>🎁 Donations: ${member.donations}</p>
+    <p>⭐ Level: ${member.expLevel}</p>
+</div>
+`;
     });
 
     document.getElementById("clanInfo").innerHTML = `
@@ -194,6 +234,9 @@ ${topDonatorsHTML}
         </tbody>
 
     </table>
+        <div class="mobile-members">
+        ${membersCardsHTML}
+    </div>
     `;
 });
 
