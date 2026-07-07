@@ -1,7 +1,7 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQ2ZTNiNGY5LTQ1OTYtNGFhMC1hZjY5LTBiMzVhMmExYjNiNCIsImlhdCI6MTc4MzMyMzE0Niwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIxLjI1MC45MCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.a3NRqH7YIq8vvaNCfAEBqKmkDq5XvreGwbfep1IaYCva0qbizfv91N3pT-cdWNCCF73H4QXdAY4Mto713Wt-gQ";
+const TOKEN = "process.env.CLASH_API_TOKEN;";
 
 const clanTags = [
 "2PG9CY2UR",
