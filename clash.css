@@ -451,3 +451,50 @@ tr:nth-child(even){
     border-left:4px solid gold;
     box-shadow:0 0 10px rgba(250,204,21,0.3);
 }
+
+
+@media (max-width: 768px){
+
+    .h-w{
+        font-size:32px;
+    }
+
+    .search-box{
+        flex-direction:column;
+    }
+
+    .search-box input{
+        width:90%;
+    }
+
+    .search-box button{
+        width:90%;
+    }
+
+    .clan-card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .clan-logo{
+        width:100px;
+        height:100px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .site-logo{
+        width:90px;
+        height:90px;
+    }
+
+    .welcome,
+    .nameclub,
+    .korosh{
+        font-size:14px;
+    }
+}
