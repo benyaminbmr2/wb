@@ -588,3 +588,11 @@ tr:nth-child(even){
         font-size:24px;
     }
 }
+
+
+.player-link,
+.player-link:visited{
+    color: inherit;
+    text-decoration: none;
+}
+

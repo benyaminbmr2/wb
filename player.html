@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Player Details</title>
+<link rel="stylesheet" href="clash.css">
+<style>
+
+body{
+    background:#0f172a;
+    color:white;
+    font-family:Arial;
+    padding:20px;
+}
+
+.player-card{
+    max-width:700px;
+    margin:auto;
+    background:#1e293b;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+}
+
+.player-card h1{
+    color:#facc15;
+}
+
+.info{
+    background:#334155;
+    margin:10px 0;
+    padding:12px;
+    border-radius:12px;
+    font-size:18px;
+}
+
+.back-btn{
+    background:linear-gradient(135deg,#facc15,#eab308);
+    color:black;
+    padding:12px 25px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<button onclick="history.back()" class="back-btn">
+⬅ Back To Clan
+</button>
+
+<div id="playerInfo"></div>
+
+<script>
+
+const tag =
+new URLSearchParams(window.location.search)
+.get("tag");
+
+fetch("clans.json")
+.then(r=>r.json())
+.then(clans=>{
+
+    let player = null;
+
+    clans.forEach(clan=>{
+
+        const found =
+        clan.membersData.find(m =>
+            m.tag.replace("#","") === tag
+        );
+
+        if(found){
+            player = found;
+        }
+
+    });
+
+    if(!player){
+
+        document.getElementById("playerInfo").innerHTML =
+        "<h1>Player Not Found</h1>";
+
+        return;
+    }
+
+    document.getElementById("playerInfo").innerHTML = `
+
+    <div class="player-card">
+
+        <h1>👤 ${player.name}</h1>
+
+        <div class="info">
+            🏷 Tag: ${player.tag}
+        </div>
+
+        <div class="info">
+            🏰 Town Hall: ${player.townHall}
+        </div>
+
+        <div class="info">
+            ⭐ Level: ${player.expLevel}
+        </div>
+
+        <div class="info">
+            🏆 Trophies: ${player.trophies}
+        </div>
+
+        <div class="info">
+            🎁 Donations: ${player.donations}
+        </div>
+
+        <div class="info">
+            👑 Role: ${player.role}
+        </div>
+
+    </div>
+
+    `;
+
+});
+
+</script>
+
+</body>
+</html>

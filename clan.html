@@ -168,7 +168,13 @@ top5Donators.forEach((player,index)=>{
 
         membersHTML += `
         <tr>
-            <td>${member.name}</td>
+                <td>
+        <a class="player-link"
+           href="player.html?tag=${member.tag.replace("#","")}">
+           ${member.name}
+        </a>
+    </td>
+            
             <td>${member.role}</td>
             <td>${member.townHall}</td>
             <td>${member.trophies}</td>
