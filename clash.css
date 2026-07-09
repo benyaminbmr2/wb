@@ -11,11 +11,11 @@ h1{
 }
 
 .h1-c{
-    color:rgb(212,82,17);
-    border: 3px solid rgb(0, 255, 4);
+    color:rgb(237, 3, 3);
+    border: 3px solid rgb(4, 0, 255);
     border-radius: 80px;
     padding: 8px;
-    background-color: #ffea00;
+    background-color: #e1ff00;
 }
 
 .nameclub{
@@ -38,10 +38,10 @@ h1{
 
 .korosh{
     text-align:center;
-    border:3px solid rgb(24,0,236);
+    border:3px solid rgb(236, 0, 0);
     padding:8px;
     border-radius:80px;
-    background-color:rgb(255,179,0);
+    background-color:rgb(0, 30, 255);
     color:black;
 }
 
@@ -596,3 +596,16 @@ tr:nth-child(even){
     text-decoration: none;
 }
 
+.top{
+    background:linear-gradient(
+        90deg,
+        #facc15,
+        #f59e0b,
+        #f97316
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    font-weight:bold;
+}
