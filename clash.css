@@ -611,3 +611,15 @@ tr:nth-child(even){
 }
 
 
+.rank-badge{
+    position:absolute;
+    left:-90px;
+    top:50%;
+    transform:translateY(-50%);
+
+    font-size:55px;
+    font-weight:bold;
+
+    width:80px;
+    text-align:center;
+}

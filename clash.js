@@ -29,44 +29,66 @@ async function loadClans() {
 </button>
             </tr>
             `;
+            let rankClass = "rank-other";
+let rankHTML = `#${index + 1}`;
 
-            cards.innerHTML += `
-            
-            <div class="clan-card" onclick="openClan('${clan.tag}')">
+if(index === 0){
+    rankClass = "rank-1";
+    rankHTML = "🥇";
+}
+else if(index === 1){
+    rankClass = "rank-2";
+    rankHTML = "🥈";
+}
+else if(index === 2){
+    rankClass = "rank-3";
+    rankHTML = "🥉";
+}
 
-                <img
-                src="${clan.logo}"
-                class="clan-logo"
-                alt="${clan.name}">
+    cards.innerHTML += `
 
-                <div>
-                    <h2>${clan.name}</h2>
-                    <p>${clan.tag}</p>
-                </div>
+<div class="clan-card" onclick="openClan('${clan.tag}')">
 
-                <div class="stat">
-                    Level: ${clan.level}
-                </div>
+    <div class="rank-badge ${rankClass}">
+        ${rankHTML}
+    </div>
 
-                <div class="stat">
-                    Members: ${clan.members}
-                </div>
+    <img
+    src="${clan.logo}"
+    class="clan-logo"
+    alt="${clan.name}">
 
-                <div class="stat">
-                    Points: ${clan.points}
-                </div>
-                <div class="stat">
-                    War Wins: ${clan.warWins}
-                </div>
-                <div class="stat">
-                    🎁Donations: ${clan.donations}
-                </div>
-                <div class="stat">
-                    Leader: ${clan.leader}
-                </div>
+    <div>
+        <h2>${clan.name}</h2>
+        <p>${clan.tag}</p>
+    </div>
 
-            </div>
-            `;
+    <div class="stat">
+        Level: ${clan.level}
+    </div>
+
+    <div class="stat">
+        Members: ${clan.members}
+    </div>
+
+    <div class="stat">
+        Points: ${clan.points}
+    </div>
+
+    <div class="stat">
+        War Wins: ${clan.warWins}
+    </div>
+
+    <div class="stat">
+        🎁Donations: ${clan.donations}
+    </div>
+
+    <div class="stat">
+        Leader: ${clan.leader}
+    </div>
+
+</div>
+`;
         });
 
     } catch (err) {
