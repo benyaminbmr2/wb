@@ -623,3 +623,49 @@ tr:nth-child(even){
     width:80px;
     text-align:center;
 }
+@media screen and (max-width: 768px){
+
+    .rank-badge{
+        position:absolute !important;
+        left:10px !important;
+        top:10px !important;
+        font-size:28px !important;
+        z-index:9999 !important;
+    }
+
+    .clan-card{
+        position:relative;
+        overflow:visible;
+    }
+
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+    width:14px;
+}
+
+::-webkit-scrollbar-track{
+    background:#0f172a;
+}
+
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(
+        180deg,
+        #FFD700,
+        #ff6600,
+        #ff0000
+    );
+    border-radius:20px;
+    border:2px solid #0f172a;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:linear-gradient(
+        180deg,
+        #fff700,
+        #ff8800,
+        #ff2222
+    );
+}
