@@ -90,39 +90,62 @@ fetch("clans.json")
         return;
     }
 
-    document.getElementById("playerInfo").innerHTML = `
-
-    <div class="player-card">
-
-        <h1>👤 ${player.name}</h1>
-
-        <div class="info">
-            🏷 Tag: ${player.tag}
-        </div>
-
-        <div class="info">
-            🏰 Town Hall: ${player.townHall}
-        </div>
-
-        <div class="info">
-            ⭐ Level: ${player.expLevel}
-        </div>
-
-        <div class="info">
-            🏆 Trophies: ${player.trophies}
-        </div>
-
-        <div class="info">
-            🎁 Donations: ${player.donations}
-        </div>
-
-        <div class="info">
-            👑 Role: ${player.role}
-        </div>
-
-    </div>
-
+    let heroesHTML = "";
+(player.heroes || []).forEach(hero => {
+    heroesHTML += `
+    <div class="info">👑 ${hero.name} - Lv ${hero.level}</div>
     `;
+});
+
+let troopsHTML = "";
+(player.troops || []).forEach(troop => {
+    troopsHTML += `
+    <div class="info">⚔ ${troop.name} - Lv ${troop.level}</div>
+    `;
+});
+
+let spellsHTML = "";
+(player.spells || []).forEach(spell => {
+    spellsHTML += `
+    <div class="info">✨ ${spell.name} - Lv ${spell.level}</div>
+    `;
+});
+
+let equipmentHTML = "";
+(player.heroEquipment || []).forEach(eq => {
+    equipmentHTML += `
+    <div class="info">🛡 ${eq.name} - Lv ${eq.level}</div>
+    `;
+});
+
+document.getElementById("playerInfo").innerHTML = `
+
+<div class="player-card">
+
+    <h1>👤 ${player.name}</h1>
+
+    <div class="info">🏷 Tag: ${player.tag}</div>
+    <div class="info">🏰 Town Hall: ${player.townHall}</div>
+    <div class="info">⭐ Level: ${player.expLevel}</div>
+    <div class="info">🏆 Trophies: ${player.trophies}</div>
+    <div class="info">🎁 Donations: ${player.donations}</div>
+    <div class="info">👑 Role: ${player.role}</div>
+
+    <h2>👑 Heroes</h2>
+    ${heroesHTML}
+
+    <h2>⚔ Troops</h2>
+    ${troopsHTML}
+
+    <h2>✨ Spells</h2>
+    ${spellsHTML}
+
+    <h2>🛡 Hero Equipment</h2>
+    ${equipmentHTML}
+
+</div>
+
+`;
     
 
 });

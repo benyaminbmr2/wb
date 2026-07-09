@@ -100,8 +100,14 @@ async function updateClans() {
   townHall: playerResponse.data.townHallLevel,
   trophies: playerResponse.data.trophies,
   donations: playerResponse.data.donations || 0,
-  expLevel: playerResponse.data.expLevel
+  expLevel: playerResponse.data.expLevel,
+
+  heroes: playerResponse.data.heroes || [],
+  troops: playerResponse.data.troops || [],
+  spells: playerResponse.data.spells || [],
+  heroEquipment: playerResponse.data.heroEquipment || []
 });
+
 
           await new Promise(resolve => setTimeout(resolve, 300));
 
