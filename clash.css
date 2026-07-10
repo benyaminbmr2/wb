@@ -1,9 +1,38 @@
 body{
-    background:#0f172a;
+    body{
     color:white;
     font-family:Arial,sans-serif;
     margin:0;
     padding:20px;
+
+    background:linear-gradient(
+        -45deg,
+        #020617,
+        #0f172a,
+        #1e293b,
+        #334155
+    );
+
+    background-size:400% 400%;
+
+    animation:bgMove 15s ease infinite;
+}
+
+@keyframes bgMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
 }
 
 h1{
@@ -474,6 +503,7 @@ tr:nth-child(even){
     .clan-card{
         flex-direction:column;
         text-align:center;
+        
     }
 
     .clan-logo{
@@ -669,3 +699,60 @@ tr:nth-child(even){
         #ff2222
     );
 }
+
+.top{
+    text-align:center;
+}
+
+.top-text{
+    color:#facc15;
+}
+
+.site-logo{
+  width:250px;
+height:250px;
+
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo{
+
+    0%{
+        transform: translateY(0px);
+    }
+
+    50%{
+        transform: translateY(-12px);
+    }
+
+    100%{
+        transform: translateY(0px);
+    }
+
+}
+.site-logo{
+width:220px;
+height:220px;
+
+    animation: floatLogo 3s ease-in-out infinite;
+
+    filter: drop-shadow(0 0 10px #facc15);
+    .site-logo{
+    width:220px;
+    height:220px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:4px solid #facc15;
+
+    box-shadow:
+        0 0 15px #facc15,
+        0 0 35px rgba(250,204,21,.8);
+
+    animation: floatLogo 3s ease-in-out infinite;
+}
+}
+
+
