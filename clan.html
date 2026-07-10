@@ -101,6 +101,31 @@ tr:nth-child(even){
         margin:5px 0;
     }
 }
+
+html::-webkit-scrollbar{
+    width:14px;
+}
+
+html::-webkit-scrollbar-track{
+    background:#0f172a;
+}
+
+html::-webkit-scrollbar-thumb{
+    background:linear-gradient(
+        180deg,
+        #facc15,
+        #ea7908
+    );
+
+    border-radius:20px;
+
+    box-shadow:
+        0 0 10px #facc15;
+}
+
+html::-webkit-scrollbar-thumb:hover{
+    background:#f39c11;
+}
 </style>
 
 </head>
