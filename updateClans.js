@@ -132,6 +132,10 @@ if(!dailyData.players[playerTagFull]){
           membersData.push({
   name: playerResponse.data.name,
   tag: playerResponse.data.tag,
+  donations24h:
+dailyData.players[playerTagFull]
+?.donations24h || 0,
+  
   role: member.role,
   townHall: playerResponse.data.townHallLevel,
   trophies: playerResponse.data.trophies,

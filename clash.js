@@ -144,24 +144,40 @@ function goToTopClans() {
             behavior: "smooth"
         });
 }
-let seconds = 24 * 60 * 60;
+async function loadRealTimer() {
 
-setInterval(() => {
+    const response =
+    await fetch("dailyDonations.json");
 
-    let h = Math.floor(seconds / 3600);
-    let m = Math.floor((seconds % 3600) / 60);
-    let s = seconds % 60;
+    const data =
+    await response.json();
 
-    document.getElementById("countdown").innerText =
+    setInterval(() => {
+
+        const passed =
+        Date.now() - data.lastReset;
+
+        let seconds =
+        86400 - Math.floor(passed / 1000);
+
+        if(seconds < 0){
+            seconds = 0;
+        }
+
+        let h = Math.floor(seconds / 3600);
+        let m = Math.floor((seconds % 3600) / 60);
+        let s = seconds % 60;
+
+        document.getElementById("countdown").innerText =
         `${String(h).padStart(2,"0")}:` +
         `${String(m).padStart(2,"0")}:` +
         `${String(s).padStart(2,"0")}`;
 
-    if(seconds > 0){
-        seconds--;
-    }
+    },1000);
 
-},1000);
+}
+
+loadRealTimer();
 
 async function loadDailyChampion() {
 

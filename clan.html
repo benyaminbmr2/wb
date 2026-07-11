@@ -126,6 +126,106 @@ html::-webkit-scrollbar-thumb{
 html::-webkit-scrollbar-thumb:hover{
     background:#f39c11;
 }
+.champion-row{
+    background:rgba(250,204,21,.15) !important;
+    border-left:4px solid gold;
+}
+
+.champion-row td{
+    color:#facc15;
+    font-weight:bold;
+}
+
+.card h1{
+    font-size:42px;
+    color:#facc15;
+    text-shadow:
+        0 0 10px #facc15,
+        0 0 20px #facc15;
+    text-align:center;
+}
+
+.card h2{
+    color:#38bdf8;
+    margin-top:25px;
+    font-size:24px;
+    text-shadow:0 0 10px rgba(56,189,248,.5);
+}
+
+.card p{
+    font-size:18px;
+    line-height:1.8;
+}
+
+.player-link{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.player-link:hover{
+    color:#facc15;
+    text-shadow:0 0 10px #facc15;
+}
+
+.top-player{
+    background:linear-gradient(
+        135deg,
+        #1e293b,
+        #334155
+    );
+
+    padding:15px;
+    margin:12px 0;
+    border-radius:15px;
+
+    border:1px solid #475569;
+
+    transition:.3s;
+}
+
+.top-player:hover{
+    transform:translateX(10px);
+    box-shadow:
+        0 0 15px rgba(250,204,21,.5);
+}
+
+.card{
+    background:linear-gradient(
+        145deg,
+        #1e293b,
+        #111827
+    );
+
+    border:1px solid #334155;
+
+    box-shadow:
+        0 0 25px rgba(0,0,0,.4);
+
+    padding:25px;
+}
+
+.big-logo{
+    width:140px;
+    height:140px;
+
+    border-radius:50%;
+
+    border:4px solid gold;
+
+    box-shadow:
+        0 0 20px gold;
+
+    animation:floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+    100%{transform:translateY(0);}
+}
+
 </style>
 
 </head>
@@ -160,6 +260,19 @@ fetch("clans.json")
     const topPlayer =
         [...clan.membersData]
         .sort((a,b)=>b.trophies-a.trophies)[0];
+        const topDonator24h =
+    [...clan.membersData]
+    .sort((a,b)=>
+        (b.donations24h || 0) -
+        (a.donations24h || 0)
+    )[0];
+
+const clanDonations24h =
+    clan.membersData.reduce(
+        (sum,player)=>
+        sum + (player.donations24h || 0),
+        0
+    );
         const top5Donators =
     [...clan.membersData]
     .sort((a,b)=>b.donations-a.donations)
@@ -186,27 +299,37 @@ top5Donators.forEach((player,index)=>{
 
     let membersHTML = "";
     let membersCardsHTML = "";
-
+const championTag = topDonator24h.tag;
     clan.membersData
     .sort((a,b)=>b.donations-a.donations)
     .forEach(member=>{
 
-        membersHTML += `
-        <tr>
-                <td>
+  membersHTML += `
+<tr class="${
+member.tag === championTag
+? 'champion-row'
+: ''
+}">
+
+    <td>
         <a class="player-link"
            href="player.html?tag=${member.tag.replace("#","")}">
-           ${member.name}
+           ${
+             member.tag === championTag
+             ? "👑 " + member.name
+             : member.name
+           }
         </a>
     </td>
-            
-            <td>${member.role}</td>
-            <td>${member.townHall}</td>
-            <td>${member.trophies}</td>
-            <td>${member.donations}</td>
-            <td>${member.expLevel}</td>
-        </tr>
-        `;
+
+    <td>${member.role}</td>
+    <td>${member.townHall}</td>
+    <td>${member.trophies}</td>
+    <td>${member.donations}</td>
+    <td>${member.expLevel}</td>
+
+</tr>
+`;
         membersCardsHTML += `
 <div class="member-card">
     <h3>👤 ${member.name}</h3>
@@ -241,8 +364,16 @@ top5Donators.forEach((player,index)=>{
 
         <h2>🏆 Top Trophy Player</h2>
         <p>${topPlayer.name} (${topPlayer.trophies})</p>
-        <h2>🔥 Top 5 Donators</h2>
+        <h2>👑 Daily Champion Clan</h2>
+<p>
+${topDonator24h.name}
+(${topDonator24h.donations24h || 0} Donations)
+</p>
 
+<h2>🔥 Clan Donations 24H</h2>
+<p>${clanDonations24h}</p>
+
+<h2>🔥 Top 5 Donators</h2>
 ${topDonatorsHTML}
 
     </div>
