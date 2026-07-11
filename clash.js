@@ -219,3 +219,50 @@ async function loadDailyChampion() {
 }
 
 loadDailyChampion();
+
+async function loadGlobalTopDonators() {
+
+    const response =
+    await fetch("dailyDonations.json");
+
+    const data =
+    await response.json();
+
+    const players =
+    Object.values(data.players);
+
+    players.sort(
+        (a,b)=>
+        b.donations24h - a.donations24h
+    );
+
+    const top5 =
+    players.slice(0,5);
+
+    let html = `
+    🌍 Global Top Donators 24H
+    <br><br>
+    `;
+
+    top5.forEach((player,index)=>{
+
+        const medal =
+            index === 0 ? "🥇" :
+            index === 1 ? "🥈" :
+            index === 2 ? "🥉" :
+            "🏅";
+
+        html += `
+        ${medal}
+        ${player.name}
+        - ${player.donations24h}
+        <br>
+        `;
+    });
+
+    document.getElementById(
+        "globalTopDonators"
+    ).innerHTML = html;
+}
+
+loadGlobalTopDonators();

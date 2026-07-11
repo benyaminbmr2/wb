@@ -779,3 +779,9 @@ height:220px;
     box-shadow:0 0 20px gold;
 }
 
+#globalTopDonators{
+    margin-top:20px;
+    border:2px solid #38bdf8;
+    box-shadow:
+        0 0 20px rgba(56,189,248,.5);
+}

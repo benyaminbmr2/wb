@@ -225,6 +225,49 @@ html::-webkit-scrollbar-thumb:hover{
     50%{transform:translateY(-10px);}
     100%{transform:translateY(0);}
 }
+.daily-champion-card{
+
+    background:linear-gradient(
+        135deg,
+        #facc15,
+        #f59e0b
+    );
+
+    color:#111827;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    margin:20px 0;
+
+    box-shadow:
+        0 0 25px gold;
+
+    animation:
+        championGlow 2s infinite alternate;
+}
+
+.daily-champion-card h2{
+    color:#111827 !important;
+    text-shadow:none !important;
+}
+
+@keyframes championGlow{
+
+    from{
+        box-shadow:
+        0 0 15px gold;
+    }
+
+    to{
+        box-shadow:
+        0 0 35px gold;
+    }
+
+}
 
 </style>
 
@@ -364,12 +407,20 @@ member.tag === championTag
 
         <h2>🏆 Top Trophy Player</h2>
         <p>${topPlayer.name} (${topPlayer.trophies})</p>
-        <h2>👑 Daily Champion Clan</h2>
-<p>
-${topDonator24h.name}
-(${topDonator24h.donations24h || 0} Donations)
-</p>
+<div class="daily-champion-card">
 
+    <h2>👑 Daily Champion Clan 👑</h2>
+
+    <h1>
+        ${topDonator24h.name}
+    </h1>
+
+    <h3>
+        🎁 ${topDonator24h.donations24h || 0}
+        Donations
+    </h3>
+
+</div>
 <h2>🔥 Clan Donations 24H</h2>
 <p>${clanDonations24h}</p>
 
