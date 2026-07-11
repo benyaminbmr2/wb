@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>World Of Req Login</title>
+<link rel="stylesheet" href="clash.css">
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <img src="logo.JPG.jpg" class="site-logo">
+
+    <h1>🔐 Login</h1>
+
+    <input type="text" id="user" placeholder="Username">
+
+    <input type="password" id="pass" placeholder="Password">
+
+    <button onclick="login()">
+        Enter World Of Req
+    </button>
+
+</div>
+
+<script>
+function login(){
+
+    if(
+        document.getElementById("user").value==="admin" &&
+        document.getElementById("pass").value==="123456"
+    ){
+
+        localStorage.setItem("loggedIn","true");
+
+        window.location.href="index.html";
+
+    }else{
+
+        alert("Wrong username or password");
+
+    }
+
+}
+</script>
+
+</body>
+</html>

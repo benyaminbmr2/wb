@@ -144,3 +144,21 @@ function goToTopClans() {
             behavior: "smooth"
         });
 }
+let seconds = 24 * 60 * 60;
+
+setInterval(() => {
+
+    let h = Math.floor(seconds / 3600);
+    let m = Math.floor((seconds % 3600) / 60);
+    let s = seconds % 60;
+
+    document.getElementById("countdown").innerText =
+        `${String(h).padStart(2,"0")}:` +
+        `${String(m).padStart(2,"0")}:` +
+        `${String(s).padStart(2,"0")}`;
+
+    if(seconds > 0){
+        seconds--;
+    }
+
+},1000);

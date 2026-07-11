@@ -756,3 +756,11 @@ height:220px;
 }
 
 
+.daily-timer{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    color:#facc15;
+    margin:20px 0;
+    text-shadow:0 0 10px #facc15;
+}

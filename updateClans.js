@@ -1,6 +1,17 @@
 const axios = require("axios");
 const fs = require("fs");
+const dailyFile = "dailyDonations.json";
 
+let dailyData = {
+  lastReset: Date.now(),
+  players: {}
+};
+
+if(fs.existsSync(dailyFile)){
+  dailyData = JSON.parse(
+    fs.readFileSync(dailyFile,"utf8")
+  );
+}
 const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjU1Mzc4OTEyLTMyMmEtNGVjYi1iNGU4LTgzYzljNWY5MjEwNyIsImlhdCI6MTc4MzYyOTg0OSwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE5Mi4xNS4xMzIuNjkiXSwidHlwZSI6ImNsaWVudCJ9XX0.uhn2OK6ZeJCaV0ZfUU-nrnCpRkztqwzidauJij27JzSeoEU8OGtaQ18HfnX3LUqRCBsSmjwJE6HM1w5E2cV5rQ";
 
 const clanTags = [
@@ -91,6 +102,27 @@ async function updateClans() {
               }
             }
           );
+          const currentDonations =
+playerResponse.data.donations || 0;
+
+const playerTagFull =
+playerResponse.data.tag;
+
+if(!dailyData.players[playerTagFull]){
+
+  dailyData.players[playerTagFull] = {
+    name: playerResponse.data.name,
+    startDonations: currentDonations,
+    donations24h: 0
+  };
+
+}else{
+
+  dailyData.players[playerTagFull].donations24h =
+  currentDonations -
+  dailyData.players[playerTagFull].startDonations;
+
+}
 
           totalDonations += playerResponse.data.donations || 0;
           membersData.push({
@@ -140,10 +172,27 @@ async function updateClans() {
 
     clans.sort((a, b) => b.donations - a.donations);
 
-    fs.writeFileSync(
-      "clans.json",
-      JSON.stringify(clans, null, 2)
-    );
+if(
+  Date.now() - dailyData.lastReset
+  >= 24 * 60 * 60 * 1000
+){
+
+  dailyData.lastReset = Date.now();
+
+  Object.keys(dailyData.players)
+  .forEach(tag=>{
+
+    dailyData.players[tag].startDonations = 0;
+    dailyData.players[tag].donations24h = 0;
+
+  });
+
+}
+
+fs.writeFileSync(
+  "clans.json",
+  JSON.stringify(clans, null, 2)
+);
 
     console.log("clans.json updated successfully");
 
