@@ -40,38 +40,131 @@ h1{
 }
 
 .h1-c{
-    color:rgb(237, 3, 3);
-    border: 3px solid rgb(4, 0, 255);
-    border-radius: 80px;
-    padding: 8px;
-    background-color: #e1ff00;
+
+    color:#facc15;
+
+    background:linear-gradient(
+        135deg,
+        #004fcd,
+        #e10501
+    );
+
+    border:2px solid #facc15;
+
+    border-radius:25px;
+
+    padding:15px 25px;
+
+    text-align:center;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    text-shadow:
+        0 0 10px #facc15;
+
+    box-shadow:
+        0 0 20px rgba(250,204,21,.5);
+
+    transition:.3s;
+}
+
+.h1-c:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 35px rgba(250,204,21,.9);
 }
 
 .nameclub{
+
     text-align:center;
-    border:3px solid rgb(24,0,236);
-    padding:8px;
-    border-radius:80px;
-    background-color:rgb(248,103,0);
-    color:rgb(0,255,157);
+
+    color:#850000;
+
+    background:linear-gradient(
+        135deg,
+        #56fa0a,
+        #d905b2
+    );
+
+    border:2px solid #60a5fa;
+
+    padding:15px;
+
+    border-radius:25px;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    box-shadow:
+        0 0 15px rgba(96,165,250,.5);
+
+    text-shadow:
+        0 0 5px rgba(254, 0, 0, 0.5);
+
+    transition:.3s;
+}
+
+.nameclub:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 25px rgba(96,165,250,.9);
 }
 
 .welcome{
+
     text-align:center;
-    color:rgb(6,255,2);
-    border:3px solid rgb(24,0,236);
-    padding:8px;
-    border-radius:80px;
-    background-color:rgb(248,0,0);
+
+    color:#facc15;
+
+    background:linear-gradient(
+        135deg,
+        #08f3c0,
+        #d80191
+    );
+
+    border:2px solid #facc15;
+
+    padding:15px;
+
+    border-radius:25px;
+
+    box-shadow:
+        0 0 20px rgba(250,204,21,.5);
+
+    text-shadow:
+        0 0 10px #facc15;
 }
 
+
 .korosh{
+
     text-align:center;
-    border:3px solid rgb(236, 0, 0);
-    padding:8px;
-    border-radius:80px;
-    background-color:rgb(0, 30, 255);
-    color:black;
+
+    color:white;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1e40af
+    );
+
+    border:2px solid #60a5fa;
+
+    padding:15px;
+
+    border-radius:25px;
+
+    box-shadow:
+        0 0 15px rgba(96,165,250,.5);
+
+    font-weight:bold;
 }
 
 a{
@@ -285,26 +378,48 @@ th{
     text-align:center;
     padding:60px 20px;
 }
-
 .h-w{
+
     text-align:center;
+
     font-size:55px;
-}
 
-.h-w span{
-    -webkit-text-fill-color:initial;
-    color:initial;
-}
+    font-weight:bold;
 
-.h-w{
     background:linear-gradient(
         90deg,
         #60a5fa,
         #3b82f6,
-        #2563eb
+        #2563eb,
+        #60a5fa
     );
+
+    background-size:300% 100%;
+
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+
+    animation:blueGlow 5s linear infinite;
+
+    text-shadow:
+        0 0 20px rgba(59,130,246,.4);
+}
+
+.h-w span{
+    -webkit-text-fill-color:initial;
+    color:#facc15;
+}
+
+@keyframes blueGlow{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    100%{
+        background-position:100% 50%;
+    }
+
 }
 
 .nameclub{
