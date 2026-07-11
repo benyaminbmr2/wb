@@ -86,6 +86,9 @@ else if(index === 2){
     <div class="stat">
         Leader: ${clan.leader}
     </div>
+    <div class="achievement">
+    ${getClanAchievement(clan)}
+</div>
 
 </div>
 `;
@@ -98,6 +101,26 @@ else if(index === 2){
 function openClan(tag) {
     window.location.href =
         `clan.html?tag=${encodeURIComponent(tag)}`;
+}
+function getClanAchievement(clan){
+
+    if(clan.donations >= 50000){
+        return "👑 Donation Empire";
+    }
+
+    if(clan.warWins >= 1000){
+        return "⚔️ War Machine";
+    }
+
+    if(clan.points >= 50000){
+        return "🏆 Trophy Legends";
+    }
+
+    if(clan.level >= 25){
+        return "💎 Elite Clan";
+    }
+
+    return "🔥 Rising Clan";
 }
 loadClans();
 
@@ -266,3 +289,251 @@ async function loadGlobalTopDonators() {
 }
 
 loadGlobalTopDonators();
+
+async function loadTopClansToday(){
+
+    const response =
+    await fetch("clans.json");
+
+    const clans =
+    await response.json();
+
+    clans.sort(
+        (a,b)=>
+        (b.donations24h||0) -
+        (a.donations24h||0)
+    );
+
+    const top10 =
+    clans.slice(0,10);
+
+    let html = `
+    <div class="top-clans-today">
+
+        <h2>
+            ⚡ Top Clans Today
+        </h2>
+    `;
+
+    top10.forEach((clan,index)=>{
+
+        const medal =
+            index===0?"🥇":
+            index===1?"🥈":
+            index===2?"🥉":"🏅";
+
+        html += `
+        <div class="clan-rank">
+
+            <span>
+                ${medal}
+                ${clan.name}
+            </span>
+
+            <span>
+                +${clan.donations24h || 0}
+            </span>
+
+        </div>
+        `;
+    });
+
+    html += "</div>";
+
+    document.getElementById(
+        "globalTopClans"
+    ).innerHTML = html;
+}
+
+loadTopClansToday();
+
+async function loadDonationChart(){
+
+    const response =
+    await fetch("clans.json");
+
+    const clans =
+    await response.json();
+
+    clans.sort(
+        (a,b)=>
+        (b.donations24h||0) -
+        (a.donations24h||0)
+    );
+
+    const top5 =
+    clans.slice(0,5);
+
+    const labels =
+    top5.map(c=>c.name);
+
+    const values =
+    top5.map(c=>c.donations24h||0);
+
+    new Chart(
+
+        document.getElementById(
+            "donationChart"
+        ),
+
+        {
+            type:"bar",
+
+            data:{
+                labels:labels,
+
+                datasets:[{
+                    label:"Today Donations",
+
+                    data:values
+                }]
+            },
+
+            options:{
+                responsive:true
+            }
+        }
+    );
+}
+
+loadDonationChart();
+
+async function loadHallOfFame(){
+
+    const clansResponse =
+    await fetch("clans.json");
+
+    const clans =
+    await clansResponse.json();
+
+    const dailyResponse =
+    await fetch("dailyDonations.json");
+
+    const dailyData =
+    await dailyResponse.json();
+
+    const players =
+    Object.values(dailyData.players);
+
+    players.sort(
+        (a,b)=>
+        b.donations24h - a.donations24h
+    );
+
+    const bestPlayer =
+    players[0];
+
+    const bestClan =
+    [...clans]
+    .sort(
+        (a,b)=>
+        (b.donations24h||0) -
+        (a.donations24h||0)
+    )[0];
+
+    const strongestClan =
+    [...clans]
+    .sort(
+        (a,b)=>
+        b.points - a.points
+    )[0];
+
+    document.getElementById(
+        "hallOfFame"
+    ).innerHTML = `
+
+    <div class="hall-of-fame">
+
+        <div class="fame-card">
+
+            <h3>👑 Best Donator</h3>
+
+            <p>
+                ${bestPlayer?.name || "Unknown"}
+            </p>
+
+        </div>
+
+        <div class="fame-card">
+
+            <h3>🏆 Best Clan Today</h3>
+
+            <p>
+                ${bestClan?.name || "Unknown"}
+            </p>
+
+        </div>
+
+        <div class="fame-card">
+
+            <h3>⚔️ Strongest Clan</h3>
+
+            <p>
+                ${strongestClan?.name || "Unknown"}
+            </p>
+
+        </div>
+
+    </div>
+    `;
+}
+
+loadHallOfFame();
+
+async function loadActivityFeed(){
+
+    const response =
+    await fetch("clans.json");
+
+    const clans =
+    await response.json();
+
+    let activities = [];
+
+    clans.forEach(clan=>{
+
+        if((clan.donations24h || 0) > 0){
+
+            activities.push(
+                `🔥 ${clan.name} donated ${clan.donations24h} troops today`
+            );
+
+        }
+
+        if(clan.points > 50000){
+
+            activities.push(
+                `🏆 ${clan.name} is among elite clans`
+            );
+
+        }
+
+    });
+
+    activities = activities.slice(0,10);
+
+    let html = `
+    <div class="activity-feed">
+
+        <h2>🚀 Live Activity Feed</h2>
+    `;
+
+    activities.forEach(item=>{
+
+        html += `
+        <div class="feed-item">
+
+            ${item}
+
+        </div>
+        `;
+    });
+
+    html += "</div>";
+
+    document.getElementById(
+        "activityFeed"
+    ).innerHTML = html;
+}
+
+loadActivityFeed();

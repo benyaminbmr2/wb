@@ -269,6 +269,76 @@ html::-webkit-scrollbar-thumb:hover{
 
 }
 
+.clan-stats-box{
+
+    display:flex;
+
+    gap:20px;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    margin:25px 0;
+}
+
+.stat-card{
+
+    background:linear-gradient(
+        135deg,
+        #1e293b,
+        #0f172a
+    );
+
+    border:2px solid #334155;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    min-width:220px;
+
+    text-align:center;
+
+    transition:.3s;
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,.4);
+}
+
+.stat-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+        0 0 20px rgba(250,204,21,.5);
+}
+
+.stat-title{
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+}
+
+.stat-value{
+
+    color:#facc15;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    text-shadow:
+        0 0 10px rgba(250,204,21,.5);
+}
+
 </style>
 
 </head>
@@ -343,9 +413,9 @@ top5Donators.forEach((player,index)=>{
     let membersHTML = "";
     let membersCardsHTML = "";
 const championTag = topDonator24h.tag;
-    clan.membersData
-    .sort((a,b)=>b.donations-a.donations)
-    .forEach(member=>{
+clan.membersData
+.sort((a,b)=>b.donations-a.donations)
+.forEach((member,index)=>{
 
   membersHTML += `
 <tr class="${
@@ -353,6 +423,22 @@ member.tag === championTag
 ? 'champion-row'
 : ''
 }">
+<td>
+
+${
+index === 0
+? "👑"
+
+: index === 1
+? "🥈"
+
+: index === 2
+? "🥉"
+
+: "#" + (index + 1)
+}
+
+</td>
 
     <td>
         <a class="player-link"
@@ -370,22 +456,62 @@ member.tag === championTag
     <td>${member.trophies}</td>
     <td>${member.donations}</td>
     <td>${member.expLevel}</td>
+    <td>${member.expLevel}</td>
+    <td>${getBadge(member)}</td>
+    <td>${member.donations24h || 0}</td>
+    
 
 </tr>
 `;
+function getBadge(player){
+
+    if((player.donations24h || 0) >= 500){
+        return "👑 Donation King";
+    }
+
+    if(player.donations >= 10000){
+        return "🎁 Mega Donator";
+    }
+
+    if(player.trophies >= 6000){
+        return "🏆 Trophy Master";
+    }
+
+    if(player.expLevel >= 250){
+        return "⚔️ Veteran";
+    }
+
+    return "🔥 Active Player";
+}
+
         membersCardsHTML += `
 <div class="member-card">
-    <h3>👤 ${member.name}</h3>
+
+    <h3>
+
+    ${
+        index === 0 ? "👑" :
+        index === 1 ? "🥈" :
+        index === 2 ? "🥉" :
+        "#" + (index + 1)
+    }
+
+    ${member.name}
+
+    </h3>
 
     <p>🎖 Role: ${member.role}</p>
     <p>🏰 TH: ${member.townHall}</p>
     <p>🏆 Trophies: ${member.trophies}</p>
     <p>🎁 Donations: ${member.donations}</p>
     <p>⭐ Level: ${member.expLevel}</p>
+    <p>🏅 ${getBadge(member)}</p>
+
 </div>
 `;
     });
 
+    
     document.getElementById("clanInfo").innerHTML = `
     
     <div class="card">
@@ -421,24 +547,49 @@ member.tag === championTag
     </h3>
 
 </div>
-<h2>🔥 Clan Donations 24H</h2>
-<p>${clanDonations24h}</p>
 
 <h2>🔥 Top 5 Donators</h2>
 ${topDonatorsHTML}
 
     </div>
+<div class="clan-stats-box">
 
+    <div class="stat-card">
+        <div class="stat-title">⚡ DAILY DONATED</div>
+        <div class="stat-value">
+            ${clanDonations24h}
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">🎁 TOTAL DONATED</div>
+        <div class="stat-value">
+            ${clan.donations}
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-title">👑 TOP DONATOR</div>
+        <div class="stat-value">
+            ${topDonator24h?.name || "Unknown"}
+        </div>
+    </div>
+
+</div>
     <table>
 
         <thead>
             <tr>
+                <th>Rank</th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>TH</th>
                 <th>Trophies</th>
                 <th>Donations</th>
                 <th>Level</th>
+                <th>Badge</th>
+                <th>Today</th>
+                <th>Today Donation</th>
             </tr>
         </thead>
 

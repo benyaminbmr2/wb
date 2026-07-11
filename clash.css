@@ -1023,3 +1023,228 @@ height:220px;
     }
 }
 
+.clan-stats-box{
+
+    display:flex;
+
+    gap:15px;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    margin:25px 0;
+}
+
+.stat-card{
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    min-width:220px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,.4);
+}
+
+.stat-title{
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+    font-weight:bold;
+}
+
+.stat-value{
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    color:#22c55e;
+}
+.top-clans-today{
+
+    background:linear-gradient(
+        135deg,
+        #111827,
+        #1e293b
+    );
+
+    border-radius:20px;
+
+    padding:20px;
+
+    margin:20px auto;
+
+    max-width:700px;
+
+    border:2px solid #334155;
+}
+
+.top-clans-today h2{
+
+    color:#38bdf8;
+
+    text-align:center;
+}
+
+.clan-rank{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:10px 0;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    background:#0f172a;
+}
+.badge{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    background:linear-gradient(
+        135deg,
+        #facc15,
+        #eab308
+    );
+
+    color:#111827;
+}
+.rank-cell{
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:#facc15;
+}
+.achievement{
+
+    margin-top:15px;
+
+    padding:10px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+    background:linear-gradient(
+        135deg,
+        #facc15,
+        #eab308
+    );
+
+    color:#111827;
+
+    box-shadow:
+        0 0 15px rgba(250,204,21,.5);
+}
+.hall-of-fame{
+
+    max-width:900px;
+
+    margin:20px auto;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+
+    gap:15px;
+}
+
+.fame-card{
+
+    background:linear-gradient(
+        135deg,
+        #1e293b,
+        #111827
+    );
+
+    border:2px solid #334155;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,.4);
+}
+
+.fame-card h3{
+
+    color:#facc15;
+
+    margin-bottom:10px;
+}
+
+.fame-card p{
+
+    font-size:18px;
+
+    font-weight:bold;
+}
+
+.activity-feed{
+
+    max-width:900px;
+
+    margin:20px auto;
+
+    background:#1e293b;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    border:2px solid #334155;
+}
+
+.activity-feed h2{
+
+    text-align:center;
+
+    color:#38bdf8;
+
+    margin-bottom:15px;
+}
+
+.feed-item{
+
+    padding:10px;
+
+    margin:8px 0;
+
+    background:#0f172a;
+
+    border-radius:10px;
+
+    border-left:4px solid #facc15;
+}

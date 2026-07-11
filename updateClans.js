@@ -1,6 +1,7 @@
 const axios = require("axios");
 const fs = require("fs");
 const dailyFile = "dailyDonations.json";
+const championsFile = "champions.json";
 
 let dailyData = {
   lastReset: Date.now(),
@@ -162,6 +163,12 @@ dailyData.players[playerTagFull]
       const leader = response.data.memberList.find(
         member => member.role === "leader"
       );
+      const clanDonations24h =
+membersData.reduce(
+  (sum, player) =>
+  sum + (player.donations24h || 0),
+  0
+);
 
       clans.push({
         name: response.data.name,
@@ -173,10 +180,12 @@ dailyData.players[playerTagFull]
         logo: response.data.badgeUrls.large,
         donations: totalDonations,
         leader: leader ? leader.name : "Unknown",
-        membersData: membersData
+        membersData: membersData,
+        donations24h: clanDonations24h,
       });
 
     }
+    
 
     clans.sort((a, b) => b.donations - a.donations);
 
@@ -184,7 +193,59 @@ if(
   Date.now() - dailyData.lastReset
   >= 24 * 60 * 60 * 1000
 ){
+let champion = null;
 
+Object.values(
+    dailyData.players
+).forEach(player=>{
+
+    if(
+        !champion ||
+        player.donations24h >
+        champion.donations24h
+    ){
+        champion = player;
+    }
+
+});
+let champions = [];
+
+if(fs.existsSync(championsFile)){
+
+    champions = JSON.parse(
+        fs.readFileSync(
+            championsFile,
+            "utf8"
+        )
+    );
+
+}
+
+champions.unshift({
+
+    date:
+    new Date()
+    .toISOString()
+    .split("T")[0],
+
+    name:
+    champion?.name || "Unknown",
+
+    donations:
+    champion?.donations24h || 0
+
+});
+
+champions = champions.slice(0,30);
+
+fs.writeFileSync(
+    championsFile,
+    JSON.stringify(
+        champions,
+        null,
+        2
+    )
+);
   dailyData.lastReset = Date.now();
 
   Object.keys(dailyData.players)

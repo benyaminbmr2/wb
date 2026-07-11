@@ -10,9 +10,12 @@
 <div id="dailyChampion" class="daily-champion">
     Loading Daily Champion...
 </div>
+<div id="hallOfFame"></div>
+<div id="activityFeed"></div>
 <div id="globalTopDonators" class="daily-champion">
     Loading Global Ranking...
 </div>
+<div id="globalTopClans"></div>
 <div class="daily-timer">
     ⏳ Daily Reset:
     <span id="countdown">24:00:00</span>
@@ -70,7 +73,13 @@ h1{
 <h1 class="h1-c">Top Donation Clans</h1>
 
 <hr>
+<div class="top-clans-today">
 
+    <h2>📈 Donation Growth Chart</h2>
+
+    <canvas id="donationChart"></canvas>
+
+</div>
 <div id="clanCards"></div>
 
 <h1 class="h-w">
@@ -181,6 +190,7 @@ document.onclick = () => {
 };
 <!-- rebuild -->
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="clash.js"></script>
 </body>
 </html>
