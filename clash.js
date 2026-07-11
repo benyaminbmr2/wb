@@ -162,3 +162,44 @@ setInterval(() => {
     }
 
 },1000);
+
+async function loadDailyChampion() {
+
+    const response =
+    await fetch("dailyDonations.json");
+
+    const data =
+    await response.json();
+
+    const players =
+    Object.values(data.players);
+
+    if(players.length === 0) return;
+
+    players.sort(
+        (a,b)=>
+        b.donations24h - a.donations24h
+    );
+
+    const champion = players[0];
+
+    document.getElementById(
+        "dailyChampion"
+    ).innerHTML = `
+
+    👑 Daily Champion
+
+    <br><br>
+
+    ${champion.name}
+
+    <br>
+
+    🎁 ${champion.donations24h}
+
+    Donations
+
+    `;
+}
+
+loadDailyChampion();

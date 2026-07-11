@@ -12,7 +12,7 @@ if(fs.existsSync(dailyFile)){
     fs.readFileSync(dailyFile,"utf8")
   );
 }
-const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjU1Mzc4OTEyLTMyMmEtNGVjYi1iNGU4LTgzYzljNWY5MjEwNyIsImlhdCI6MTc4MzYyOTg0OSwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjE5Mi4xNS4xMzIuNjkiXSwidHlwZSI6ImNsaWVudCJ9XX0.uhn2OK6ZeJCaV0ZfUU-nrnCpRkztqwzidauJij27JzSeoEU8OGtaQ18HfnX3LUqRCBsSmjwJE6HM1w5E2cV5rQ";
+const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjdlYzI1MjIxLTRlNWYtNDBlOC1iYmU5LWE0ODc0ODMwZjk5NCIsImlhdCI6MTc4Mzc1OTQ0MCwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIyLjIzNy4xNDciXSwidHlwZSI6ImNsaWVudCJ9XX0.JS-bh3v3O2CRXAX_mgiFHL3JKgDA4_CLeFVGqDPB7CgAxpKSFk2iR0O8dUtHn7r08mBLozAk8oGqOLQFQ9O65A";
 
 const clanTags = [
 "2PG9CY2UR",
@@ -107,16 +107,20 @@ playerResponse.data.donations || 0;
 
 const playerTagFull =
 playerResponse.data.tag;
-
+console.log("Saving player:", playerResponse.data.name);
 if(!dailyData.players[playerTagFull]){
 
   dailyData.players[playerTagFull] = {
     name: playerResponse.data.name,
     startDonations: currentDonations,
+    currentDonations: currentDonations,
     donations24h: 0
   };
 
 }else{
+
+  dailyData.players[playerTagFull].currentDonations =
+  currentDonations;
 
   dailyData.players[playerTagFull].donations24h =
   currentDonations -
@@ -181,8 +185,8 @@ if(
 
   Object.keys(dailyData.players)
   .forEach(tag=>{
-
-    dailyData.players[tag].startDonations = 0;
+dailyData.players[tag].startDonations =
+dailyData.players[tag].currentDonations;
     dailyData.players[tag].donations24h = 0;
 
   });
@@ -194,7 +198,12 @@ fs.writeFileSync(
   JSON.stringify(clans, null, 2)
 );
 
-    console.log("clans.json updated successfully");
+fs.writeFileSync(
+  dailyFile,
+  JSON.stringify(dailyData, null, 2)
+);
+
+console.log("clans.json updated successfully");
 
   } catch (error) {
 

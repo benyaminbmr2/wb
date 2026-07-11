@@ -764,3 +764,17 @@ height:220px;
     margin:20px 0;
     text-shadow:0 0 10px #facc15;
 }
+
+.daily-champion{
+    width:350px;
+    margin:20px auto;
+    padding:20px;
+    text-align:center;
+    background:#1e293b;
+    border:3px solid gold;
+    border-radius:20px;
+    color:#facc15;
+    font-size:24px;
+    font-weight:bold;
+    box-shadow:0 0 20px gold;
+}
