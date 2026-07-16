@@ -101,9 +101,6 @@ window.addEventListener("load",()=>{
 
     <h3>⚔️ Loading Top Clans... ⚔️</h3>
 
-    <button id="enterBtn">
-        🎵 Enter World Of Req
-    </button>
 
 </div>
 
@@ -233,26 +230,6 @@ document.onclick = () => {
 <!-- rebuild -->
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-document.getElementById("enterBtn").onclick = () => {
-
-    document.getElementById(
-        "welcomeMusic"
-    ).play();
-
-    const splash =
-    document.getElementById(
-        "splash-screen"
-    );
-
-    splash.style.opacity = "0";
-
-    setTimeout(() => {
-        splash.style.display = "none";
-    }, 1000);
-
-};
-</script>
 <script src="clash.js"></script>
 </body>
 </html>
