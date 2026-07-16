@@ -68,8 +68,40 @@ h1{
 </style>
 
 </head>
+<script>
+window.addEventListener("load",()=>{
 
+    setTimeout(()=>{
+
+        const splash =
+        document.getElementById(
+            "splash-screen"
+        );
+
+        splash.style.opacity = "0";
+
+        setTimeout(()=>{
+            splash.style.display =
+            "none";
+        },1000);
+
+    },3000);
+
+});
+</script>
 <body>
+    <div id="splash-screen">
+    <img src="logo.png" class="splash-logo">
+
+    <h1>👑 Welcome to World Of Req 👑</h1>
+
+    <p>The Ultimate Clash of Clans Ranking Platform</p>
+
+    <h3>⚔️ Loading Top Clans... ⚔️</h3>
+</div>
+    
+
+</div>
 <h1 class="h1-c">Top Donation Clans</h1>
 
 <hr>
