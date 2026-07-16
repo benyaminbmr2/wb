@@ -1329,3 +1329,37 @@ height:220px;
     50%{opacity:1;}
     100%{opacity:0.5;}
 }
+#enterBtn{
+
+    margin-top:20px;
+
+    padding:14px 30px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:linear-gradient(
+        135deg,
+        #facc15,
+        #f59e0b
+    );
+
+    color:black;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+#enterBtn:hover{
+
+    transform:scale(1.08);
+
+    box-shadow:
+        0 0 20px gold;
+}
