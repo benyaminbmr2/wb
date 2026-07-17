@@ -1363,3 +1363,13 @@ height:220px;
     box-shadow:
         0 0 20px gold;
 }
+.chart-box{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    margin:20px 0;
+}
+
+#clanChart{
+    max-height:400px;
+}

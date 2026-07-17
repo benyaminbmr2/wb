@@ -513,7 +513,8 @@ function getBadge(player){
 
     
     document.getElementById("clanInfo").innerHTML = `
-    
+
+
     <div class="card">
         <img src="${clan.logo}" class="big-logo">
         <h1>${clan.name}</h1>
@@ -552,6 +553,11 @@ function getBadge(player){
 ${topDonatorsHTML}
 
     </div>
+            <h2>📊 Clan Statistics</h2>
+
+<div class="chart-box">
+    <canvas id="clanChart"></canvas>
+</div>
 <div class="clan-stats-box">
 
     <div class="stat-card">
@@ -602,9 +608,40 @@ ${topDonatorsHTML}
         ${membersCardsHTML}
     </div>
     `;
+    const ctx = document.getElementById("clanChart");
+
+new Chart(ctx, {
+    type: "bar",
+
+    data: {
+        labels: [
+            "Daily Donations",
+            "Total Donations",
+            "Points",
+            "War Wins",
+            "Members"
+        ],
+
+        datasets: [{
+            label: clan.name,
+            data: [
+                clanDonations24h,
+                clan.donations,
+                clan.points,
+                clan.warWins,
+                clan.members
+            ]
+        }]
+    },
+
+    options: {
+        responsive: true
+    }
+});
 });
 
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 </html>
