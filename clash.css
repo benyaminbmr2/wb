@@ -1454,3 +1454,8 @@ height:220px;
     width:350px;
 
 }
+#menuBtn{
+    position:fixed;
+    top:15px;
+    right:15px;
+}
