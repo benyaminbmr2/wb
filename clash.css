@@ -1373,3 +1373,84 @@ height:220px;
 #clanChart{
     max-height:400px;
 }
+@media (max-width:768px){
+
+    body{
+        padding:10px;
+    }
+
+    h1{
+        font-size:28px;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+    h3{
+        font-size:18px;
+    }
+
+    .clan-card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .clan-logo{
+        width:70px;
+        height:70px;
+    }
+
+    .stats{
+        justify-content:center;
+    }
+
+    .stat{
+        width:100%;
+    }
+
+    .daily-champion,
+    .daily-champion-card,
+    .top-clans-today,
+    .chart-box,
+    .card{
+        width:100%;
+        box-sizing:border-box;
+    }
+
+    canvas{
+        max-width:100%;
+    }
+
+    input{
+        width:100%;
+        box-sizing:border-box;
+    }
+
+    button{
+        width:100%;
+    }
+
+}
+@media (max-width:768px){
+
+    table{
+        display:none;
+    }
+
+}
+.site-logo{
+    max-width:120px;
+    width:100%;
+    height:auto;
+}
+.chart-box{
+    overflow-x:auto;
+}
+#aboutBox{
+
+    max-width:90%;
+
+    width:350px;
+
+}
