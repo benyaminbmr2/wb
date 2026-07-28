@@ -182,6 +182,7 @@ membersData.reduce(
         leader: leader ? leader.name : "Unknown",
         membersData: membersData,
         donations24h: clanDonations24h,
+        
       });
 
     }
