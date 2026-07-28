@@ -338,6 +338,84 @@ html::-webkit-scrollbar-thumb:hover{
     text-shadow:
         0 0 10px rgba(250,204,21,.5);
 }
+.clan-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-top:20px;
+
+    flex-wrap:wrap;
+
+}
+
+.clan-game-btn{
+
+    display:inline-block;
+
+    background:linear-gradient(
+        135deg,
+        #facc15,
+        #f59e0b
+    );
+
+    color:#111827;
+
+    text-decoration:none;
+
+    padding:14px 30px;
+
+    border-radius:15px;
+
+    font-weight:bold;
+
+    font-size:18px;
+
+    box-shadow:
+        0 0 20px rgba(250,204,21,.6);
+
+    transition:.3s;
+
+}
+
+.clan-game-btn:hover{
+
+    transform:scale(1.08);
+
+}
+
+.clan-copy-btn{
+
+    background:#334155;
+
+    color:white;
+
+    border:none;
+
+    padding:14px 30px;
+
+    border-radius:15px;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.clan-copy-btn:hover{
+
+    background:#475569;
+
+    transform:scale(1.08);
+
+}
 
 </style>
 
@@ -526,6 +604,35 @@ function getBadge(player){
         <p><b>Points:</b> ${clan.points}</p>
         <p><b>War Wins:</b> ${clan.warWins}</p>
         <p><b>Total Donations:</b> ${clan.donations}</p>
+        <div class="clan-actions">
+            <p><b>Total Donations:</b> ${clan.donations}</p>
+
+<div class="clan-buttons">
+
+    <a
+    href="https://link.clashofclans.com/en?action=OpenClanProfile&tag=${clan.tag.replace('#','%23')}"
+    target="_blank"
+    class="clan-game-btn"
+    >
+        🎮 OPEN CLAN
+    </a>
+
+    <button
+    class="clan-copy-btn"
+    onclick="copyTag('${clan.tag}')"
+    >
+        📋 COPY TAG
+    </button>
+
+</div>
+
+<hr>
+
+
+            
+</div>
+        
+
 
         <hr>
 
@@ -642,6 +749,24 @@ new Chart(ctx, {
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+function copyTag(tag){
+
+    navigator.clipboard.writeText(tag);
+
+    alert(
+        "Clan Tag Copied: " + tag
+    );
+
+}
+
+</script>
+
+<script src="clan.js"></script>
+
+</body>
+</html>
 
 </body>
 </html>
