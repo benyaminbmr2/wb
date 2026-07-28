@@ -13,7 +13,7 @@ if(fs.existsSync(dailyFile)){
     fs.readFileSync(dailyFile,"utf8")
   );
 }
-const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjQ1MDJlMTAzLTdiZWMtNGRjZi04OTY5LTYxOTYwN2E3NmMzNSIsImlhdCI6MTc4NTA4ODg3NCwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIxLjExOS4yNDkiXSwidHlwZSI6ImNsaWVudCJ9XX0.xBbCdja4a-PHJ3QHwewhIt7n_GRgt7oiVzhjVgLGD02OOMBalrr68ZIdNBSuOLkeg-tAvHz3tFP1UH4FNjQJMw";
+const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjYxNDUxMTQzLTQ1ZWEtNGI1ZS1iNDM1LWJjYmViMGFjZTAyMiIsImlhdCI6MTc4NTI1MDk1Nywic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIxLjIwMS4xMjUiXSwidHlwZSI6ImNsaWVudCJ9XX0.mGxVoyaYlcJctGE7cVBKw1spEZbTPsCsJdT-7BOkXopX7Kbkxx28drvqyvx0gwiHTq-lL2EBljCcJIucpzBQgw";
 
 const clanTags = [
 "2PG9CY2UR",
@@ -173,6 +173,7 @@ membersData.reduce(
       clans.push({
         name: response.data.name,
         tag: response.data.tag,
+        description: response.data.description,
         level: response.data.clanLevel,
         members: response.data.members,
         points: response.data.clanPoints,

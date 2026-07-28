@@ -1669,3 +1669,24 @@ height:220px;
 .social-links i:hover{
     transform:scale(1.2);
 }
+.clan-description{
+
+    background:#111827;
+
+    border:2px solid #334155;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    margin:15px 0;
+
+    text-align:center;
+
+    font-size:18px;
+
+    color:#cbd5e1;
+
+    line-height:1.8;
+
+}
