@@ -2,7 +2,7 @@ const axios = require("axios");
 const fs = require("fs");
 const dailyFile = "dailyDonations.json";
 const championsFile = "champions.json";
-
+const historyFile = "donationHistory.json";
 let dailyData = {
   lastReset: Date.now(),
   players: {}
@@ -270,7 +270,37 @@ fs.writeFileSync(
   dailyFile,
   JSON.stringify(dailyData, null, 2)
 );
+let history = {};
 
+if(fs.existsSync(historyFile)){
+    history = JSON.parse(
+        fs.readFileSync(historyFile,"utf8")
+    );
+}
+
+const today =
+new Date().toISOString().split("T")[0];
+
+clans.forEach(clan=>{
+
+    if(!history[clan.tag]){
+        history[clan.tag] = [];
+    }
+
+    history[clan.tag].push({
+        date: today,
+        donations: clan.donations
+    });
+
+    history[clan.tag] =
+    history[clan.tag].slice(-30);
+
+});
+
+fs.writeFileSync(
+    historyFile,
+    JSON.stringify(history,null,2)
+);
 console.log("clans.json updated successfully");
 
   } catch (error) {

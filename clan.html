@@ -815,9 +815,15 @@ ${topDonatorsHTML}
 
     </div>
             <h2>📊 Clan Statistics</h2>
+            
 
 <div class="chart-box">
     <canvas id="clanChart"></canvas>
+</div>
+<h2>📈 Donation History</h2>
+
+<div class="chart-box">
+    <canvas id="historyChart"></canvas>
 </div>
 <div class="clan-stats-box">
 
@@ -898,6 +904,53 @@ new Chart(ctx, {
     options: {
         responsive: true
     }
+});
+fetch("donationHistory.json")
+.then(r => r.json())
+.then(history => {
+
+    const clanHistory =
+    history[clan.tag] || [];
+
+    const labels =
+    clanHistory.map(x => x.date);
+
+    const values =
+    clanHistory.map(x => x.donations);
+
+    const historyCtx =
+    document.getElementById("historyChart");
+
+    new Chart(historyCtx, {
+
+        type: "line",
+
+        data: {
+
+            labels: labels,
+
+            datasets: [{
+
+                label: "Total Donations",
+
+                data: values,
+
+                tension: 0.4,
+
+                fill: true
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true
+
+        }
+
+    });
+
 });
 });
 
