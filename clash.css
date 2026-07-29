@@ -1669,24 +1669,102 @@ height:220px;
 .social-links i:hover{
     transform:scale(1.2);
 }
-.clan-description{
+.card h1{
 
-    background:#111827;
-
-    border:2px solid #334155;
-
-    border-radius:15px;
-
-    padding:15px;
-
-    margin:15px 0;
+    font-size:70px;
 
     text-align:center;
 
-    font-size:18px;
+    color:#facc15;
 
-    color:#cbd5e1;
+    text-shadow:
+    0 0 10px #facc15,
+    0 0 20px #facc15,
+    0 0 40px #f59e0b;
 
-    line-height:1.8;
+    margin-top:15px;
+
+}
+.clan-description{
+
+    background:rgba(0,0,0,.4);
+
+    border:2px solid #facc15;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    margin:20px 0;
+
+    text-align:center;
+
+    font-size:22px;
+
+    line-height:2;
+
+    color:white;
+
+    box-shadow:
+    0 0 20px rgba(250,204,21,.3);
+
+}
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:15px;
+
+    margin:25px 0;
+
+}
+
+.info-card{
+
+    background:rgba(15,23,42,.9);
+
+    border:1px solid #334155;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+.info-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 0 20px rgba(250,204,21,.4);
+
+}
+
+.info-card span{
+
+    display:block;
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+    margin-bottom:10px;
+
+}
+
+.info-card h3{
+
+    color:#facc15;
+
+    margin:0;
+
+    font-size:22px;
 
 }

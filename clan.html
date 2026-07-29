@@ -6,10 +6,131 @@
 
 <style>
 body{
-    background:#0f172a;
+
+    background:
+    linear-gradient(
+        rgba(0,0,0,0.65),
+        rgba(0,0,0,0.85)
+    ),
+    url("castle-bg.png");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-repeat:no-repeat;
+
+    background-attachment:fixed;
+
     color:white;
-    font-family:Arial;
+
+    font-family:Arial,sans-serif;
+
     padding:20px;
+
+}
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+
+    gap:15px;
+
+    margin:25px 0;
+
+}
+
+.info-card{
+
+    background:rgba(15,23,42,.9);
+
+    border:1px solid #334155;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    text-align:center;
+
+    transition:.3s;
+
+}
+
+.info-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 0 20px rgba(250,204,21,.4);
+
+}
+
+.info-card span{
+
+    display:block;
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+    margin-bottom:10px;
+
+}
+
+.info-card h3{
+
+    color:#facc15;
+
+    margin:0;
+
+    font-size:22px;
+
+}
+.clan-description{
+
+    background:linear-gradient(
+        135deg,
+        rgba(250,204,21,.15),
+        rgba(15,23,42,.9)
+    );
+
+    border:2px solid #facc15;
+
+    border-left:8px solid gold;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    margin:25px 0;
+
+    text-align:center;
+
+    font-size:22px;
+
+    line-height:2;
+
+    color:white;
+
+    font-weight:bold;
+
+    box-shadow:
+        0 0 25px rgba(250,204,21,.35);
+
+}
+.clan-description h2{
+
+    color:#facc15;
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+    text-shadow:
+        0 0 10px #facc15;
+
 }
 
 .card{
@@ -596,22 +717,49 @@ function getBadge(player){
     <div class="card">
         <img src="${clan.logo}" class="big-logo">
         <h1>${clan.name}</h1>
+        
         <div class="clan-description">
+    ${clan.description || "No Description"}
+</div>
 
-    📝 ${clan.description || "No Description"}
+<div class="info-grid">
+
+    <div class="info-card">
+        <span>🏷️ TAG</span>
+        <h3>${clan.tag}</h3>
+    </div>
+
+    <div class="info-card">
+        <span>👑 LEADER</span>
+        <h3>${clan.leader}</h3>
+    </div>
+
+    <div class="info-card">
+        <span>⭐ LEVEL</span>
+        <h3>${clan.level}</h3>
+    </div>
+
+    <div class="info-card">
+        <span>👥 MEMBERS</span>
+        <h3>${clan.members}</h3>
+    </div>
+
+    <div class="info-card">
+        <span>🏆 POINTS</span>
+        <h3>${clan.points}</h3>
+    </div>
+
+    <div class="info-card">
+        <span>⚔️ WAR WINS</span>
+        <h3>${clan.warWins}</h3>
+    </div>
+
+    <div class="info-card">
+        <span>🎁 DONATIONS</span>
+        <h3>${clan.donations}</h3>
+    </div>
 
 </div>
- 
-
-        <p><b>Tag:</b> ${clan.tag}</p>
-        <p><b>Leader:</b> ${clan.leader}</p>
-        <p><b>Level:</b> ${clan.level}</p>
-        <p><b>Members:</b> ${clan.members}</p>
-        <p><b>Points:</b> ${clan.points}</p>
-        <p><b>War Wins:</b> ${clan.warWins}</p>
-        <p><b>Total Donations:</b> ${clan.donations}</p>
-        <div class="clan-actions">
-            <p><b>Total Donations:</b> ${clan.donations}</p>
 
 <div class="clan-buttons">
 
