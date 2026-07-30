@@ -119,7 +119,7 @@ const ctx = document.getElementById("compareChart");
 
 new Chart(ctx,{
 
-    type:"radar",
+    type:"bar",
 
     data:{
 
@@ -159,7 +159,33 @@ new Chart(ctx,{
     },
 
     options:{
-        responsive:true
+
+        responsive:true,
+
+        plugins:{
+            legend:{
+                labels:{
+                    color:"white"
+                }
+            }
+        },
+
+        scales:{
+
+            x:{
+                ticks:{
+                    color:"white"
+                }
+            },
+
+            y:{
+                ticks:{
+                    color:"white"
+                }
+            }
+
+        }
+
     }
 
 });
