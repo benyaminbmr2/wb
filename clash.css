@@ -1768,3 +1768,70 @@ height:220px;
     font-size:22px;
 
 }
+.compare-btn{
+
+    display:inline-block;
+
+    background:linear-gradient(
+        135deg,
+        #facc15,
+        #ea580c
+    );
+
+    color:#111827;
+
+    padding:14px 28px;
+
+    border-radius:15px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+    box-shadow:
+    0 0 20px rgba(250,204,21,.6);
+
+    transition:.3s;
+
+}
+
+
+.compare-btn:hover{
+
+    transform:scale(1.08);
+
+    box-shadow:
+    0 0 35px gold;
+
+}
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+.compare-btn-hero{
+    background:linear-gradient(135deg,#facc15,#f59e0b);
+    color:#111827;
+    text-decoration:none;
+    margin-top:20px;
+    padding:14px 30px;
+   border-radius:30px;
+    font-weight:bold;
+    font-size:18px;
+    box-shadow:0 0 20px rgba(250,204,21,.6);
+    transition:.3s;
+}
+
+.compare-btn-hero:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 30px rgba(250,204,21,.9);
+}
+
+.hero-btn{
+    padding:14px 30px;
+}
