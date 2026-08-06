@@ -2000,3 +2000,19 @@ height:220px;
 
     font-weight:bold;
 }
+.global-chat-desc{
+    font-size:18px;
+    line-height:1.7;
+    color:#e2e8f0;
+    max-width:700px;
+    margin:auto;
+}
+
+@media(max-width:768px){
+
+.global-chat-desc{
+    font-size:15px;
+    padding:0 15px;
+}
+
+}
