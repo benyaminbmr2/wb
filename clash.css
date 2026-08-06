@@ -1835,3 +1835,168 @@ height:220px;
 .hero-btn{
     padding:14px 30px;
 }
+.hero-actions{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:30px;
+    margin-top:30px;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+}
+
+.global-chat-box{
+    width:90%;
+    max-width:900px;
+
+    background:#1e293b;
+
+    border:2px solid #14b8a6;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 25px rgba(20,184,166,.4);
+}
+.chat-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    padding:16px 40px;
+
+    background:linear-gradient(
+        135deg,
+        #00e676,
+        #00bfa5
+    );
+
+    color:white;
+    text-decoration:none;
+
+    font-size:22px;
+    font-weight:bold;
+
+    border-radius:50px;
+
+    border:2px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 0 15px rgba(0,230,118,.5),
+        0 0 35px rgba(0,230,118,.3);
+
+    transition:all .3s ease;
+}
+
+.chat-btn:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.05);
+
+    box-shadow:
+        0 0 25px rgba(0,230,118,.8),
+        0 0 50px rgba(0,230,118,.5);
+
+    background:linear-gradient(
+        135deg,
+        #00ff88,
+        #00d4aa
+    );
+}
+
+.chat-btn:active{
+    transform:scale(.98);
+}
+.chat-btn{
+    display:inline-block;
+    margin-top:15px;
+
+    padding:18px 45px;
+
+    background:linear-gradient(
+        135deg,
+        #00ff88,
+        #00c896
+    );
+
+    color:white;
+    text-decoration:none;
+
+    font-size:22px;
+    font-weight:bold;
+
+    border-radius:50px;
+
+    box-shadow:
+        0 0 20px #00ff88,
+        0 0 50px rgba(0,255,136,.5);
+
+    transition:.3s;
+}
+
+.chat-btn:hover{
+    transform:translateY(-4px) scale(1.05);
+
+    box-shadow:
+        0 0 30px #00ff88,
+        0 0 80px rgba(0,255,136,.8);
+}
+.chat-members{
+    color:#00ff88;
+    font-size:18px;
+    font-weight:bold;
+
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%{opacity:.5;}
+    50%{opacity:1;}
+    100%{opacity:.5;}
+}
+.global-chat-box{
+
+    background:
+    linear-gradient(
+        135deg,
+        #1e293b,
+        #0f172a
+    );
+
+    border:2px solid #00ffcc;
+
+    box-shadow:
+        0 0 25px rgba(0,255,204,.4);
+
+    border-radius:25px;
+
+    position:relative;
+}
+
+.global-chat-box::before{
+    content:"LIVE";
+
+    position:absolute;
+    top:15px;
+    right:20px;
+
+    background:#00ff88;
+    color:black;
+
+    padding:5px 12px;
+
+    border-radius:20px;
+
+    font-weight:bold;
+}
