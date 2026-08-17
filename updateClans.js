@@ -258,6 +258,47 @@ dailyData.players[tag].currentDonations;
     dailyData.players[tag].donations24h = 0;
 
   });
+  let allPlayers = [];
+
+clans.forEach(clan => {
+
+    clan.membersData.forEach(player => {
+
+        allPlayers.push({
+
+            name: player.name,
+            tag: player.tag,
+
+            townHall: player.townHall,
+
+            trophies: player.trophies,
+
+            donations: player.donations,
+
+            clanName: clan.name,
+
+            clanTag: clan.tag,
+
+            clanLogo: clan.logo
+
+        });
+
+    });
+
+});
+
+allPlayers.sort(
+(a,b) => b.trophies - a.trophies
+);
+
+fs.writeFileSync(
+    "players.json",
+    JSON.stringify(
+        allPlayers,
+        null,
+        2
+    )
+);
 
 }
 
