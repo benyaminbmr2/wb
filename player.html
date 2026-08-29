@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <title>Player Details</title>
 <link rel="stylesheet" href="clash.css">
+<img
+src="${player.clanLogo}"
+class="player-clan-logo">
 <style>
 
 body{
@@ -62,6 +65,8 @@ body{
 const tag =
 new URLSearchParams(window.location.search)
 .get("tag");
+
+console.log("TAG FROM URL:", tag);
 
 fetch("clans.json")
 .then(r=>r.json())
@@ -128,8 +133,26 @@ document.getElementById("playerInfo").innerHTML = `
     <div class="info">🏰 Town Hall: ${player.townHall}</div>
     <div class="info">⭐ Level: ${player.expLevel}</div>
     <div class="info">🏆 Trophies: ${player.trophies}</div>
+    <div class="info">
+
+🛡 Clan:
+${player.clanName}
+
+</div>
     <div class="info">🎁 Donations: ${player.donations}</div>
     <div class="info">👑 Role: ${player.role}</div>
+    <div style="margin-top:20px;">
+
+<a
+href="https://link.clashofclans.com/en?action=OpenPlayerProfile&tag=${player.tag.replace('#','')}"
+target="_blank"
+class="open-player-btn">
+
+🎮 Open In Clash Of Clans
+
+</a>
+
+</div>
 
     <h2>👑 Heroes</h2>
     ${heroesHTML}

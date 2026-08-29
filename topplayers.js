@@ -73,7 +73,14 @@ tbody.innerHTML += `
 
 <td>#${index+1}</td>
 
-<td>${player.name}</td>
+<td>
+<a href="player.html?tag=${encodeURIComponent(player.tag)}"
+class="player-link">
+
+${player.name}
+
+</a>
+</td>
 
 <td>TH${player.townHall}</td>
 
