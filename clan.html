@@ -611,7 +611,10 @@ top5Donators.forEach((player,index)=>{
 
     let membersHTML = "";
     let membersCardsHTML = "";
-const championTag = topDonator24h.tag;
+const championTag =
+topDonator24h
+? topDonator24h.tag
+: "";
 clan.membersData
 .sort((a,b)=>b.donations-a.donations)
 .forEach((member,index)=>{
@@ -800,11 +803,11 @@ function getBadge(player){
     <h2>👑 Daily Champion Clan 👑</h2>
 
     <h1>
-        ${topDonator24h.name}
+        ${topDonator24h?.name || "No Champion"}
     </h1>
 
     <h3>
-        🎁 ${topDonator24h.donations24h || 0}
+        🎁 ${topDonator24h?.donations24h || 0}
         Donations
     </h3>
 
