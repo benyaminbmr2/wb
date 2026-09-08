@@ -548,6 +548,7 @@ html::-webkit-scrollbar-thumb:hover{
 
 <div id="clanInfo"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
 const tag = new URLSearchParams(window.location.search).get("tag");
@@ -561,30 +562,37 @@ fetch("clans.json")
     );
 
     if(!clan){
-        document.body.innerHTML = "<h1>Clan not found</h1>";
+        document.getElementById("clanInfo").innerHTML =
+        "<h1>Clan Not Found</h1>";
         return;
     }
 
+    const members = clan.membersData || [];
+
     const topDonator =
-        [...clan.membersData]
-        .sort((a,b)=>b.donations-a.donations)[0];
+        [...members]
+        .sort((a,b)=>b.donations-a.donations)[0] || {};
 
     const topPlayer =
-        [...clan.membersData]
-        .sort((a,b)=>b.trophies-a.trophies)[0];
-        const topDonator24h =
-    [...clan.membersData]
-    .sort((a,b)=>
-        (b.donations24h || 0) -
-        (a.donations24h || 0)
-    )[0];
+        [...members]
+        .sort((a,b)=>b.trophies-a.trophies)[0] || {};
 
-const clanDonations24h =
-    clan.membersData.reduce(
-        (sum,player)=>
-        sum + (player.donations24h || 0),
-        0
-    );
+    const topDonator24h =
+        [...members]
+        .sort((a,b)=>
+            (b.donations24h || 0) -
+            (a.donations24h || 0)
+        )[0] || {};
+
+    const championTag =
+        topDonator24h.tag || "";
+
+    const clanDonations24h =
+        members.reduce(
+            (sum,player)=>
+            sum + (player.donations24h || 0),
+            0
+        );
         const top5Donators =
     [...clan.membersData]
     .sort((a,b)=>b.donations-a.donations)
@@ -611,10 +619,6 @@ top5Donators.forEach((player,index)=>{
 
     let membersHTML = "";
     let membersCardsHTML = "";
-const championTag =
-topDonator24h
-? topDonator24h.tag
-: "";
 clan.membersData
 .sort((a,b)=>b.donations-a.donations)
 .forEach((member,index)=>{
@@ -657,7 +661,6 @@ index === 0
     <td>${member.townHall}</td>
     <td>${member.trophies}</td>
     <td>${member.donations}</td>
-    <td>${member.expLevel}</td>
     <td>${member.expLevel}</td>
     <td>${getBadge(member)}</td>
     <td>${member.donations24h || 0}</td>
@@ -971,11 +974,5 @@ function copyTag(tag){
 }
 
 </script>
-
-<script src="clan.js"></script>
-
-</body>
-</html>
-
 </body>
 </html>
