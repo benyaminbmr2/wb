@@ -13,7 +13,7 @@ if(fs.existsSync(dailyFile)){
     fs.readFileSync(dailyFile,"utf8")
   );
 }
-const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImJiNWQ0NDFiLWQ0ZjgtNDc1YS05ZDcwLTNmYmI1ZGJjNjZkZSIsImlhdCI6MTc4ODg4NjQ0OCwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIxLjQxLjEzNyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.VrTqX9ogcq5hZAGqGQEtPvXrV1uPAwTo-X4vdqDSsX7CiwHZNiKKIy3Ve4TseCsQuvle4wc3tTNnteqiCifTnA";
+const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImJiNWQ0NDFiLWQ0ZjgtNDc1YS05ZDcwLTNmYmI1ZGJjNjZkZSIsImlhdCI6MTc4ODg4NjQ0OCwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjUuMTIxLjQxLjEzNyJdLCJ0eXBlIjoiY2xpZW50In1dfQ.VrTqX9ogcq5hZAGqGQEtPvXrV1uPAwTo-X4vdqDSsX7CiwHZNiKKIy3Ve4TseCsQuvle4wc3tTNnteqiCifTnAن";
 
 const clanTags = [
 "2LJ9P0GJL",
@@ -134,8 +134,8 @@ if(!dailyData.players[playerTagFull]){
           membersData.push({
   name: playerResponse.data.name,
   tag: playerResponse.data.tag,
-  clanName: clan.name,
-clanLogo: clan.logo,
+ clanName: response.data.name,
+clanLogo: response.data.badgeUrls.large,
   donations24h:
 dailyData.players[playerTagFull]
 ?.donations24h || 0,
