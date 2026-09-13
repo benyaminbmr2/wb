@@ -28,11 +28,18 @@
 
 <style>
 body{
-    background:#0f172a;
+    background:
+    linear-gradient(
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.75)
+    ),
+    url("castle-bg.png");
+
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
     color:white;
-    font-family:Arial,sans-serif;
-    margin:0;
-    padding:20px;
 }
 
 h1{
@@ -114,7 +121,7 @@ window.addEventListener("load",()=>{
 </div>
 <h1 class="h1-c">Top Donation Clans</h1>
 
-<hr>
+<div class="cool-line"></div>
 <div class="top-clans-today">
 
     <h2>📈 Donation Growth Chart </h2>
@@ -159,7 +166,7 @@ window.addEventListener("load",()=>{
     <tbody id="clansTable"></tbody>
 </table>
 
-<br><hr>
+<br><div class="cool-line"></div>
 <section class="hero">
 
     <h1 class="h-w">
