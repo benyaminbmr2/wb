@@ -1,5 +1,21 @@
 const axios = require("axios");
 const fs = require("fs");
+
+// Token: from env var (GitHub Actions) or local token.json (gitignored)
+function getApiToken() {
+  if (process.env.COC_API_TOKEN) return process.env.COC_API_TOKEN;
+  if (fs.existsSync("token.json")) {
+    return JSON.parse(fs.readFileSync("token.json", "utf8")).token;
+  }
+  console.error("API token not found. Set COC_API_TOKEN env var or create token.json: {\"token\":\"...\"}");
+  process.exit(1);
+}
+const TOKEN = getApiToken();
+
+// API base: RoyaleAPI proxy by default (works from any IP, incl. GitHub Actions)
+// Whitelist proxy IP 45.79.218.79 in developer.clashofclans.com
+// Override locally with: COC_API_BASE=https://api.clashofclans.com/v1 node updateClans.js
+const API_BASE = process.env.COC_API_BASE || "https://cocproxy.royaleapi.dev/v1";
 const dailyFile = "dailyDonations.json";
 const championsFile = "champions.json";
 const historyFile = "donationHistory.json";
@@ -13,8 +29,6 @@ if(fs.existsSync(dailyFile)){
     fs.readFileSync(dailyFile,"utf8")
   );
 }
-const TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImMzNGY3OWQ3LWU1MjctNDE5NS1iYmZmLWRiYjQ3NDgxODgxNSIsImlhdCI6MTc5MTM1NzkzMiwic3ViIjoiZGV2ZWxvcGVyL2ZmNGIzZGQ1LWM3MjUtNGMwYS1hYmZlLWQ1YjlkMjJjMjNhNSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjgzLjEyMS4yNTEuMTQ3Il0sInR5cGUiOiJjbGllbnQifV19.HtcNbXvHxnSVim_TYlZBjZ3y3grPjA910UmxTzErQxcWdQeXN6Fzf-cy_wxx4SZI7j_Ms7233Ki8X4rMRHmkOA";
-
 const clanTags = [
 "2LJ9P0GJL",
 "2RV9R8PU2",
@@ -79,7 +93,7 @@ async function updateClans() {
       console.log("Loading clan:", tag);
 
       const response = await axios.get(
-        `https://api.clashofclans.com/v1/clans/%23${tag}`,
+        `${API_BASE}/clans/%23${tag}`,
         {
           headers: {
             Authorization: `Bearer ${TOKEN}`
@@ -97,7 +111,7 @@ async function updateClans() {
         try {
 
           const playerResponse = await axios.get(
-            `https://api.clashofclans.com/v1/players/%23${playerTag}`,
+            `${API_BASE}/players/%23${playerTag}`,
             {
               headers: {
                 Authorization: `Bearer ${TOKEN}`
@@ -351,6 +365,11 @@ console.log("clans.json updated successfully");
     console.log("Status:", error.response?.status);
     console.log("URL:", error.config?.url);
     console.log(error.message);
+    if (error.response?.status === 403) {
+      console.log("\n403 = token invalid OR caller IP not whitelisted.");
+      console.log("For GitHub Actions/local runs via proxy, whitelist 45.79.218.79 in developer.clashofclans.com");
+      process.exit(1);
+    }
 
   }
 }

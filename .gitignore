@@ -1,0 +1,9 @@
+# API token - never commit this
+token.json
+
+# Dependencies
+node_modules/
+
+# Misc
+curl
+test.js
