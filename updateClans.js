@@ -30,7 +30,7 @@ if(fs.existsSync(dailyFile)){
   );
 }
 const clanTags = [
-"2LJ9P0GJL",
+"YGOYOYQQ",
 "2RV9R8PU2",
 "2PUJVQ898",
 "828CQLV",
