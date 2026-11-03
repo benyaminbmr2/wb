@@ -1,116 +1,196 @@
-fetch("players.json")
 
-.then(r => r.json())
+document.addEventListener("DOMContentLoaded", loadTopPlayers);
 
-.then(players => {
+async function loadTopPlayers() {
 
-players.sort(
-(a,b)=>
-b.trophies-a.trophies
-);
+    const tbody = document.getElementById("playersBody");
 
-let html = `
-<table class="compare-table">
+    try {
 
-<tr>
-<th>#</th>
-<th>Player</th>
-<th>TH</th>
-<th>Trophies</th>
-<th>Clan</th>
-</tr>
-`;
+        const response = await fetch("players.json", {
+            cache: "no-store"
+        });
 
-players.forEach((p,index)=>{
+        if (!response.ok) {
+            throw new Error("Players file not found");
+        }
 
-html += `
-<tr>
+        const players = await response.json();
 
-<td>${index+1}</td>
+        if (!Array.isArray(players)) {
+            throw new Error("Invalid players data");
+        }
 
-<td>${p.name}</td>
+        const sortedPlayers = players
+            .filter(p => p && p.name && Number.isFinite(Number(p.trophies)))
+            .sort((a, b) => Number(b.trophies) - Number(a.trophies));
 
-<td>${p.townHall}</td>
+        tbody.innerHTML = "";
 
-<td>${p.trophies}</td>
+        sortedPlayers.forEach((player, index) => {
 
-<td>${p.clanName}</td>
+            const rank = index + 1;
 
-</tr>
-`;
+            const row = document.createElement("tr");
 
-});
+            // RANK
 
-html += "</table>";
+            const rankCell = document.createElement("td");
 
-document.getElementById(
-"playersTable"
-).innerHTML = html;
+            const rankBadge = document.createElement("span");
 
-});
-fetch("players.json")
+            rankBadge.className = "rank-badge";
 
-.then(r => r.json())
+            if (rank <= 3) {
+                rankBadge.classList.add(`rank-${rank}`);
+            }
 
-.then(players => {
+            rankBadge.textContent =
+                rank === 1 ? "🥇" :
+                rank === 2 ? "🥈" :
+                rank === 3 ? "🥉" :
+                `#${rank}`;
 
-players.sort(
-(a,b) => b.trophies - a.trophies
-);
+            rankCell.appendChild(rankBadge);
 
-const tbody =
-document.getElementById(
-"playersBody"
-);
+            // PLAYER
 
-tbody.innerHTML = "";
+            const nameCell = document.createElement("td");
 
-players.forEach((player,index)=>{
+            const playerLink = document.createElement("a");
 
-tbody.innerHTML += `
+            playerLink.className = "player-link";
 
-<tr>
+            playerLink.textContent = player.name;
 
-<td>#${index+1}</td>
+            if (player.tag) {
 
-<td>
-<a href="player.html?tag=${encodeURIComponent(player.tag)}"
-class="player-link">
+                playerLink.href =
+                    `player.html?tag=${encodeURIComponent(player.tag)}`;
 
-${player.name}
+            } else {
 
-</a>
-</td>
+                playerLink.textContent += " (No Tag)";
+                playerLink.removeAttribute("href");
 
-<td>TH${player.townHall}</td>
+            }
 
-<td>${player.trophies}</td>
+            nameCell.appendChild(playerLink);
 
-<td>${player.clanName}</td>
+            // TOWN HALL
 
-</tr>
+            const thCell = document.createElement("td");
 
-`;
+            if (player.townHall) {
 
-});
+                const thImage = document.createElement("img");
 
-if(players.length >= 3){
+                thImage.className = "townhall-icon";
 
-document.querySelector(
-".first .player-name"
-).innerText =
-players[0].name;
+                thImage.src =
+                    `images/townhall/th${player.townHall}.png`;
 
-document.querySelector(
-".second .player-name"
-).innerText =
-players[1].name;
+                thImage.alt = `Town Hall ${player.townHall}`;
 
-document.querySelector(
-".third .player-name"
-).innerText =
-players[2].name;
+                thImage.title = `Town Hall ${player.townHall}`;
+
+                thImage.onerror = function() {
+                    this.replaceWith(
+                        document.createTextNode(`TH${player.townHall}`)
+                    );
+                };
+
+                thCell.appendChild(thImage);
+
+            } else {
+
+                thCell.textContent = "-";
+
+            }
+
+            // TROPHIES
+
+            const trophyCell = document.createElement("td");
+
+            const trophy = document.createElement("span");
+
+            trophy.className = "trophy-value";
+
+            trophy.textContent =
+                `🏆 ${Number(player.trophies).toLocaleString()}`;
+
+            trophyCell.appendChild(trophy);
+
+            // CLAN
+
+            const clanCell = document.createElement("td");
+
+            const clan = document.createElement("span");
+
+            clan.className = "clan-badge";
+
+            clan.textContent = player.clanName || "No Clan";
+
+            clanCell.appendChild(clan);
+
+            row.append(
+                rankCell,
+                nameCell,
+                thCell,
+                trophyCell,
+                clanCell
+            );
+
+            tbody.appendChild(row);
+
+        });
+
+        updateTopThree(sortedPlayers);
+
+        if (sortedPlayers.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5">No Players Found</td>
+                </tr>
+            `;
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Unable to load players.
+                </td>
+            </tr>
+        `;
+
+    }
 
 }
 
-});
+function updateTopThree(players) {
+
+    const cards = [
+        ".first .player-name",
+        ".second .player-name",
+        ".third .player-name"
+    ];
+
+    cards.forEach((selector, index) => {
+
+        const element = document.querySelector(selector);
+
+        if (element) {
+
+            element.textContent =
+                players[index]?.name || "No Player";
+
+        }
+
+    });
+
+}
+

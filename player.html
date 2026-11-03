@@ -1,51 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<title>Player Details</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Player Profile | World of Req</title>
+
 <link rel="stylesheet" href="clash.css">
-<img
-src="${player.clanLogo}"
-class="player-clan-logo">
+
 <style>
 
-body{
-    background:#0f172a;
-    color:white;
-    font-family:Arial;
-    padding:20px;
+body {
+    background: #071329;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
 }
 
-.player-card{
-    max-width:700px;
-    margin:auto;
-    background:#1e293b;
-    border-radius:20px;
-    padding:25px;
-    text-align:center;
+.profile-container {
+    max-width: 850px;
+    margin: 35px auto;
 }
 
-.player-card h1{
-    color:#facc15;
+.profile-card {
+    background: linear-gradient(145deg,#102958,#0b1c3b);
+    border: 1px solid rgba(96,165,250,.2);
+    border-radius: 22px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 15px 45px rgba(0,0,0,.4);
 }
 
-.info{
-    background:#334155;
-    margin:10px 0;
-    padding:12px;
-    border-radius:12px;
-    font-size:18px;
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    margin-bottom: 15px;
 }
 
-.back-btn{
-    background:linear-gradient(135deg,#facc15,#eab308);
-    color:black;
-    padding:12px 25px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    margin-bottom:20px;
-    font-weight:bold;
+.profile-card h1 {
+    color: #facc15;
+    font-size: 30px;
+}
+
+.profile-tag {
+    color: #94a3b8;
+    margin-bottom: 25px;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.stat-box {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.stat-box h3 {
+    color: #60a5fa;
+    font-size: 14px;
+}
+
+.stat-box p {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.clan-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin: 15px auto;
+    display: block;
+}
+
+.section-title {
+    color: #facc15;
+    margin-top: 35px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.info-list {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.info-item {
+    background: #172d50;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: left;
+}
+
+.open-player-btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg,#22c55e,#15803d);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.open-player-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(34,197,94,.4);
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 13px 22px;
+    background: #1e3a5f;
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.loading {
+    text-align: center;
+    padding: 50px;
+    color: #60a5fa;
+}
+
+.error {
+    text-align: center;
+    padding: 40px;
+    color: #f87171;
+}
+
+@media(max-width:600px) {
+
+    .profile-stats,
+    .info-list {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-card {
+        padding: 20px;
+    }
+
 }
 
 </style>
@@ -54,126 +161,377 @@ body{
 
 <body>
 
-<button onclick="history.back()" class="back-btn">
-⬅ Back To Clan
-</button>
+<a href="topplayers.html" class="back-btn">
+⬅ Back To Rankings
+</a>
 
-<div id="playerInfo"></div>
+<div class="profile-container">
+
+    <div id="playerInfo" class="loading">
+        Loading Player Profile...
+    </div>
+
+</div>
 
 <script>
 
-const tag =
-new URLSearchParams(window.location.search)
-.get("tag");
+const params = new URLSearchParams(window.location.search);
 
-console.log("TAG FROM URL:", tag);
+const requestedTag = normalizeTag(params.get("tag") || "");
 
-fetch("clans.json")
-.then(r=>r.json())
-.then(clans=>{
+function normalizeTag(tag) {
+    return String(tag).replace(/#/g, "").trim().toUpperCase();
+}
 
-    let player = null;
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
 
-    clans.forEach(clan=>{
+async function getJSON(file) {
 
-        const found =
-        clan.membersData.find(m =>
-            m.tag.replace("#","") === tag
-        );
-
-        if(found){
-            player = found;
-        }
-
+    const response = await fetch(file, {
+        cache: "no-store"
     });
 
-    if(!player){
-
-        document.getElementById("playerInfo").innerHTML =
-        "<h1>Player Not Found</h1>";
-
-        return;
+    if (!response.ok) {
+        throw new Error(file + " could not be loaded");
     }
 
-    let heroesHTML = "";
-(player.heroes || []).forEach(hero => {
-    heroesHTML += `
-    <div class="info">👑 ${hero.name} - Lv ${hero.level}</div>
-    `;
-});
+    return response.json();
+}
 
-let troopsHTML = "";
-(player.troops || []).forEach(troop => {
-    troopsHTML += `
-    <div class="info">⚔ ${troop.name} - Lv ${troop.level}</div>
-    `;
-});
+async function loadPlayer() {
 
-let spellsHTML = "";
-(player.spells || []).forEach(spell => {
-    spellsHTML += `
-    <div class="info">✨ ${spell.name} - Lv ${spell.level}</div>
-    `;
-});
+    const container = document.getElementById("playerInfo");
 
-let equipmentHTML = "";
-(player.heroEquipment || []).forEach(eq => {
-    equipmentHTML += `
-    <div class="info">🛡 ${eq.name} - Lv ${eq.level}</div>
-    `;
-});
+    try {
 
-document.getElementById("playerInfo").innerHTML = `
+        if (!requestedTag) {
+            throw new Error("Player tag is missing");
+        }
 
-<div class="player-card">
+        // LOAD PLAYER DATA
 
-    <h1>👤 ${player.name}</h1>
+        const players = await getJSON("players.json");
 
-    <div class="info">🏷 Tag: ${player.tag}</div>
-    <div class="info">🏰 Town Hall: ${player.townHall}</div>
-    <div class="info">⭐ Level: ${player.expLevel}</div>
-    <div class="info">🏆 Trophies: ${player.trophies}</div>
-    <div class="info">
+        let player = Array.isArray(players)
+            ? players.find(p =>
+                normalizeTag(p.tag) === requestedTag
+            )
+            : null;
 
-🛡 Clan:
-${player.clanName}
 
-</div>
-    <div class="info">🎁 Donations: ${player.donations}</div>
-    <div class="info">👑 Role: ${player.role}</div>
-    <div style="margin-top:20px;">
+async function loadPlayer() {
 
-<a
-href="https://link.clashofclans.com/en?action=OpenPlayerProfile&tag=${player.tag.replace('#','')}"
-target="_blank"
-class="open-player-btn">
+    const container = document.getElementById("playerInfo");
 
-🎮 Open In Clash Of Clans
+    try {
 
-</a>
+        if (!requestedTag) {
+            throw new Error("Player tag is missing");
+        }
 
-</div>
+        // LOAD PLAYER DATA
+        const players = await getJSON("players.json");
 
-    <h2>👑 Heroes</h2>
-    ${heroesHTML}
+        let player = Array.isArray(players)
+            ? players.find(p => normalizeTag(p.tag) === requestedTag)
+            : null;
 
-    <h2>⚔ Troops</h2>
-    ${troopsHTML}
+        // LOAD CLAN DATA
+        let clans = [];
 
-    <h2>✨ Spells</h2>
-    ${spellsHTML}
+        try {
+            clans = await getJSON("clans.json");
+        } catch (error) {
+            console.warn("Clans data unavailable:", error);
+        }
 
-    <h2>🛡 Hero Equipment</h2>
-    ${equipmentHTML}
+        if (!Array.isArray(clans)) {
+            clans = [];
+        }
 
-</div>
+        // FIND PLAYER IN CLAN MEMBERS
+        let clanMember = null;
+        let clanData = null;
 
-`;
-    
+        for (const clan of clans) {
 
-});
+            const members = Array.isArray(clan.membersData)
+                ? clan.membersData
+                : [];
+
+            const found = members.find(member =>
+                normalizeTag(member.tag) === requestedTag
+            );
+
+            if (found) {
+                clanMember = found;
+                clanData = clan;
+                break;
+            }
+        }
+
+        // FIND CLAN USING CLAN TAG
+        if (!clanData && player?.clanTag) {
+            clanData = clans.find(clan =>
+                normalizeTag(clan.tag) === normalizeTag(player.clanTag)
+            );
+        }
+
+        // MERGE PLAYER DATA
+        if (player && clanMember) {
+            player = { ...clanMember, ...player };
+        } else if (!player && clanMember) {
+            player = clanMember;
+        }
+
+        if (!player) {
+            throw new Error("Player Not Found");
+        }
+
+        // PLAYER DATA
+        const name = escapeHTML(player.name || "Unknown Player");
+        const tag = escapeHTML(player.tag || requestedTag);
+        const townHall = Number(player.townHall) || 0;
+        const trophies = Number(player.trophies) || 0;
+        const level = player.expLevel ?? player.playerLevel ?? player.level ?? "-";
+        const donations = player.donations ?? 0;
+        const role = escapeHTML(player.role || "Member");
+
+        // CLAN INFO
+        const clanName = escapeHTML(
+            player.clanName || clanData?.name || "No Clan"
+        );
+
+        const clanLogo =
+            player.clanLogo ||
+            clanData?.logo ||
+            clanData?.badgeUrls?.medium ||
+            clanData?.badgeUrls?.small ||
+            "";
+
+        const safeLogo = /^https?:\/\//i.test(clanLogo)
+            ? escapeHTML(clanLogo)
+            : "";
+
+        const heroes = player.heroes || [];
+        const troops = player.troops || [];
+        const spells = player.spells || [];
+        const equipment = player.heroEquipment || [];
+
+        // BUILD LISTS
+        function buildList(items, icon) {
+
+            if (!Array.isArray(items) || items.length === 0) {
+                return '<p>No information available.</p>';
+            }
+
+            return items.map(item => `
+                <div class="info-item">
+                    ${icon} ${escapeHTML(item.name)}
+                    <br>
+                    <small>Level ${escapeHTML(item.level ?? "-")}</small>
+                </div>
+            `).join("");
+        }
+
+        // CLASH PROFILE LINK
+        const clashLink =
+            "https://link.clashofclans.com/en?action=OpenPlayerProfile&tag=" +
+            encodeURIComponent(requestedTag);
+
+        // RENDER PROFILE
+        container.className = "";
+
+        container.innerHTML = `
+            ... (همان قالب HTML قبلی، بدون تغییر) ...
+        `;
+
+    } catch (error) {
+
+        console.error("Player Profile Error:", error);
+
+        container.className = "error";
+
+        container.innerHTML = `
+            <h2>Unable To Load Profile</h2>
+            <p>${escapeHTML(error.message)}</p>
+        `;
+    }
+}
+
+
+;
+        // PLAYER DATA
+        const name = escapeHTML(player.name || "Unknown Player");
+        const tag = escapeHTML(player.tag || requestedTag);
+        const townHall = Number(player.townHall) || 0;
+        const trophies = Number(player.trophies) || 0;
+        const level = player.expLevel ?? player.playerLevel ?? player.level ?? "-";
+        const donations = player.donations ?? 0;
+        const role = escapeHTML(player.role || "Member");
+
+        // CLAN INFO
+        const clanName = escapeHTML(
+            player.clanName || clanData?.name || "No Clan"
+        );
+
+        const clanLogo =
+            player.clanLogo ||
+            clanData?.logo ||
+            clanData?.badgeUrls?.medium ||
+            clanData?.badgeUrls?.small ||
+            "";
+
+        const safeLogo = /^https?:\/\//i.test(clanLogo)
+            ? escapeHTML(clanLogo)
+            : "";
+
+        const heroes = player.heroes || [];
+        const troops = player.troops || [];
+        const spells = player.spells || [];
+        const equipment = player.heroEquipment || [];
+
+
+        // BUILD LISTS
+
+        function buildList(items, icon) {
+
+            if (!Array.isArray(items) || items.length === 0) {
+                return '<p>No information available.</p>';
+            }
+
+            return items.map(item => `
+                <div class="info-item">
+                    ${icon} ${escapeHTML(item.name)}
+                    <br>
+                    <small>Level ${escapeHTML(item.level ?? "-")}</small>
+                </div>
+            `).join("");
+
+        }
+
+        // CLASH PROFILE LINK
+
+        const clashLink =
+            "https://link.clashofclans.com/en?action=OpenPlayerProfile&tag=" +
+            encodeURIComponent(requestedTag);
+
+        // RENDER PROFILE
+
+        container.className = "";
+
+        container.innerHTML = `
+
+            <div class="profile-card">
+
+                ${safeLogo ? `
+                    <img
+                        src="${safeLogo}"
+                        class="clan-logo"
+                        alt="Clan Logo"
+                    >
+                ` : ""}
+
+                <h1>👤 ${name}</h1>
+
+                <div class="profile-tag">
+                    ${tag}
+                </div>
+
+                <div class="profile-stats">
+
+                    <div class="stat-box">
+                        <h3>🏰 Town Hall</h3>
+                        <p>${townHall || "-"}</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h3>⭐ Experience Level</h3>
+                        <p>${escapeHTML(level)}</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h3>🏆 Trophies</h3>
+                        <p>${trophies.toLocaleString()}</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h3>🎁 Donations</h3>
+                        <p>${Number(donations).toLocaleString()}</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h3>🛡 Clan</h3>
+                        <p>${clanName}</p>
+                    </div>
+
+                    <div class="stat-box">
+                        <h3>👑 Role</h3>
+                        <p>${role}</p>
+                    </div>
+
+                </div>
+
+                <a
+                    href="${clashLink}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="open-player-btn"
+                >
+                    🎮 Open In Clash Of Clans
+                </a>
+
+                <h2 class="section-title">👑 Heroes</h2>
+                <div class="info-list">
+                    ${buildList(heroes, "👑")}
+                </div>
+
+                <h2 class="section-title">⚔ Troops</h2>
+                <div class="info-list">
+                    ${buildList(troops, "⚔️")}
+                </div>
+
+                <h2 class="section-title">✨ Spells</h2>
+                <div class="info-list">
+                    ${buildList(spells, "✨")}
+                </div>
+
+                <h2 class="section-title">🛡 Hero Equipment</h2>
+                <div class="info-list">
+                    ${buildList(equipment, "🛡️")}
+                </div>
+
+            </div>
+
+        `;
+
+    } catch(error) {
+
+        console.error("Player Profile Error:", error);
+
+        container.className = "error";
+
+        container.innerHTML = `
+            <h2>Unable To Load Profile</h2>
+            <p>${escapeHTML(error.message)}</p>
+        `;
+
+    }
+
+}
+
+loadPlayer();
 
 </script>
 
 </body>
 </html>
+
