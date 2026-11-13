@@ -1,5 +1,10 @@
 [
   {
+    "date": "2026-11-13",
+    "name": "EmaD",
+    "donations": 1474175
+  },
+  {
     "date": "2026-11-09",
     "name": "EmaD",
     "donations": 523756
@@ -143,10 +148,5 @@
     "date": "2026-07-14",
     "name": "✨Fatal✨",
     "donations": 343122
-  },
-  {
-    "date": "2026-07-12",
-    "name": "Prince Tutul",
-    "donations": 6921350
   }
 ]
